@@ -1,4 +1,4 @@
-function kanyeWest() {
+function openYT() {
     const body = document.querySelector('html');
     body.innerHTML = '';
     const iframe = document.createElement('iframe'); 
@@ -18,7 +18,7 @@ function kanyeWest() {
     returnbutton.style.zIndex = '1';
     returnbutton.setAttribute('id', 'returnbutton',
     );
-    returnbutton.addEventListener('mouseover', () => {goofyahhmove(returnbutton)});
+    returnbutton.addEventListener('mouseover', () => {moving(returnbutton)});
         
         
     returnbutton.addEventListener('click', () => {
@@ -27,7 +27,7 @@ function kanyeWest() {
     body.appendChild(iframe);
     body.appendChild(returnbutton);
 }
-function Kanyesouth() {
+function openCat() {
     const body = document.querySelector('body');
     body.innerHTML = '';
     const iframe = document.createElement('iframe');
@@ -41,7 +41,7 @@ function Kanyesouth() {
     body.appendChild(iframe);
     body.appendChild(returnbutton);
 }
-function goofyahhmove(returnbutton) {
+function moving(returnbutton) {
     returnbutton.style.left = "2000px";
     returnbutton.style.backgroundImage = 'url("https://th.bing.com/th/id/OIP.EWgi7rIvjjBXCfZLH1LDJgAAAA?rs=1&pid=ImgDetMain")';
     returnbutton.style.height = '180px';
