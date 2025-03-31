@@ -50,7 +50,7 @@ function moving(returnbutton) {
     returnbutton.style.backgroundSize = '180px 180px';
     returnbutton.style.transition = 'left 4s';
     returnbutton.style.transitionDelay = '1s';
-    while (true){
+    setTimeout(() => {
         returnbutton.style.color = 'red';
-    }
+    }, 1000);
 }
