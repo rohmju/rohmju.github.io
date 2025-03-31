@@ -1,0 +1,74 @@
+html { 
+    background-image: url(https://4kwallpapers.com/images/walls/thumbs_3t/8710.jpg);
+    background-size: cover;
+
+    
+    
+}
+h1 {
+    color: red;
+    text-align: center;
+    font-family: cursive;
+}
+.Knopf {
+    background-color: lightgray;
+    border: 2px solid darkgray;
+    border-radius: 5px;
+}
+
+.Knopf:hover {
+    background-color:transparent;
+    transform: scale(1.1);
+    justify-content: center;
+    transition: 0,5s;
+    fill-opacity: 0.5;
+    color: white;
+    
+    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out, opacity 0.5s ease-in-out, color 0.5s ease-in-out;
+    
+    
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+#inside {
+    background-color: lightsteelblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-image: url(https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    border-radius: 20px
+    ;
+}
+
+#outside {
+    position: relative;
+    font-size: 18px;
+    padding: 10px;
+    margin: 0 auto;
+    border-radius: 20px;
+    display: flex; 
+    justify-content: center; 
+    display: block; }
+
+#under{
+
+    left: 0px;
+    align-items: center;
+    
+    
+}
+#text1{
+    flex-direction: column;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    gap : 5px;
+    text-align: center;
+}
