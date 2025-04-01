@@ -33,7 +33,7 @@ h1 {
     outline: none;
     transition: 1s ease-in-out;
     border-radius: 5px;
-    margin: 5px;
+    margin: 6px;
 }
 
 .btn:hover {
