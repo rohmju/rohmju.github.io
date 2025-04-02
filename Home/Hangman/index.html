@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman</title>
@@ -17,10 +17,11 @@
         <button id="Difficultyslider" class="btn" onclick="visible()">Choose Difficulty</button>
         <button class="btn" onclick="window.location.href='../index.html'">Exit</button>
     </div>
-    <button class="Difficulty" onclick="youneverseemeagain(this)">Easy </button>
-    <button class="Difficulty" onclick="youneverseemeagain(this)">Normal (Recomended)</button>
-    <button class="Difficulty" onclick="youneverseemeagain(this)">Hard </button>
-    <button class="Difficulty" onclick="youneverseemeagain(this)">Impossible </button>
-    
+    <div id="difficultyOptions">
+        <button class="Difficulty" onclick="youneverseemeagain(this)">Easy</button>
+        <button class="Difficulty" onclick="youneverseemeagain(this)">Normal (Recommended)</button>
+        <button class="Difficulty" onclick="youneverseemeagain(this)">Hard</button>
+        <button class="Difficulty" onclick="youneverseemeagain(this)">Impossible</button>
+    </div>
 </body>
 </html>
