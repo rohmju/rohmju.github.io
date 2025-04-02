@@ -45,31 +45,13 @@ window.visible = visible;
 window.getthisclasshidden = getthisclasshidden;
 window.youneverseemeagain = youneverseemeagain;
 
-// Function to fetch and log data from a local file
-async function fetchLocalFile(filePath) {
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.text();
-        return data; // Return the fetched data
-    } catch (error) {
-        console.error("Error fetching the file:", error);
-    }
-}
-
 // Import the GoogleGenAI library
 import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI() {
     try {
-        // Lade den API-Schlüssel aus der Datei
-        const apiKey = await fetchLocalFile('key.txt');
-        if (!apiKey) {
-            console.error("Failed to fetch API key.");
-            return;
-        }
+        // HARDCODED API KEY (nur für Tests)
+        const apiKey = "AIzaSyBuKIDaFpVt4sMEtU8FOuZL2H7GiiluB1g"; // Ersetze dies durch deinen API-Schlüssel
 
         // Initialisiere die GoogleGenAI-Bibliothek
         const ai = new GoogleGenAI({ apiKey });
