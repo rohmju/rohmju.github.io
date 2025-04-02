@@ -46,7 +46,7 @@ window.getthisclasshidden = getthisclasshidden;
 window.youneverseemeagain = youneverseemeagain;
 
 // Import the GoogleGenAI library
-import { GoogleGenAI } from 'https://cdn.jsdelivr.net/npm/@google/genai@latest/+esm';
+import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI() {
     try {
