@@ -1,6 +1,9 @@
 var choosen = false;
 var selectedwindow = false;
+import { GoogleGenAI } from "@google/genai";
+// Removed 'fs' import as it is not supported in browser environments
 function switchtotrue() {
+    
     choosen = true;
 }
 
@@ -14,7 +17,7 @@ function start() {
     }
 
 }
-function getthisclassvisible() {
+function visible() {
     selectedwindow = true;
     let elements = document.getElementsByClassName("Difficulty");
     for (let element of elements) {
@@ -36,3 +39,16 @@ function youneverseemeagain(clickedElement){
     choosen = true;
     getthisclasshidden("Difficulty");
 }
+
+
+
+// Removed 'fs' usage as it is not supported in browser environments
+
+async function main() {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: "Explain how AI works",
+  });
+  console.log(response.text);
+}
+
