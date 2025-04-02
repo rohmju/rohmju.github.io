@@ -48,40 +48,21 @@ window.youneverseemeagain = youneverseemeagain;
 // Import the GoogleGenAI library
 import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
-// Funktion zum Laden des API-Schlüssels aus key.txt
-async function fetchApiKey(filePath) {
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const apiKey = await response.text();
-        return apiKey.trim(); // Entfernt unnötige Leerzeichen
-    } catch (error) {
-        console.error("Error fetching API key:", error);
-        return null;
-    }
-}
-
 async function initializeAI() {
     try {
-        // Lade den API-Schlüssel aus key.txt
-        const apiKey = await fetchApiKey('key.txt');
-        if (!apiKey) {
-            console.error("API key could not be loaded.");
-            return;
-        }
+        // HARDCODED API KEY (for testing purposes only)
+        const apiKey = "AIzaSyBuKIDaFpVt4sMEtU8FOuZL2H7GiiluB1g";
 
-        // Initialisiere die GoogleGenAI-Bibliothek
+        // Initialize the GoogleGenAI library
         const ai = new GoogleGenAI({ apiKey });
 
-        // Sende eine Anfrage an das Modell
+        // Send a request to the model
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash",
             contents: "Explain how AI works",
         });
 
-        // Logge die Antwort
+        // Log the response
         console.log(response.text);
     } catch (error) {
         console.error("Error initializing AI or generating content:", error);
