@@ -82,4 +82,8 @@ h1 {
 }
 .Difficulty{
     visibility: hidden;
+    background-color: #4F95DA;
+    color:#333;
+    border-radius: 20px;
+    border-color: #4F95DA;
 }
