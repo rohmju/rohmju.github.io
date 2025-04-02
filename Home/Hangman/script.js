@@ -48,10 +48,29 @@ window.youneverseemeagain = youneverseemeagain;
 // Import the GoogleGenAI library
 import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
+// Funktion zum Laden des API-Schlüssels aus key.txt
+async function fetchApiKey(filePath) {
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const apiKey = await response.text();
+        return apiKey.trim(); // Entfernt unnötige Leerzeichen
+    } catch (error) {
+        console.error("Error fetching API key:", error);
+        return null;
+    }
+}
+
 async function initializeAI() {
     try {
-        // HARDCODED API KEY (nur für Tests)
-        const apiKey = "AIzaSyBuKIDaFpVt4sMEtU8FOuZL2H7GiiluB1g"; // Ersetze dies durch deinen API-Schlüssel
+        // Lade den API-Schlüssel aus key.txt
+        const apiKey = await fetchApiKey('key.txt');
+        if (!apiKey) {
+            console.error("API key could not be loaded.");
+            return;
+        }
 
         // Initialisiere die GoogleGenAI-Bibliothek
         const ai = new GoogleGenAI({ apiKey });
