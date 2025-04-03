@@ -87,3 +87,11 @@ h1 {
     border-radius: 20px;
     border-color: #4F95DA;
 }
+
+.Difficulty:hover {
+    transition: 0.5s ease-in-out;
+    background-color: red;
+    border-color: darkred;
+    font-size: large;
+}
+
