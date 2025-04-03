@@ -90,7 +90,16 @@ async function initializeAI(difficulty) {
 
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash",
-            contents: `I want you to generate a word from 4 possible difficulties: easy, medium, hard, and impossible. The word should be 4 letters long for easy, 6 letters long for medium, 8 letters long for hard, and 10 letters long for impossible. The word should be a noun. The word should not contain any special characters or numbers. The word should be in German. Your output only should be 1 word. Like if I tell you "easy" you only respond "Biene". The difficulty level is: ${difficulty}. Remember to only respond with the word and nothing else.`,
+            contents: `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. 
+The word should be a noun and should not contain any special characters or numbers. 
+For easy, the word should be 4-5 letters long. 
+For medium, the word should be 6-7 letters long. 
+For hard, the word should be 8-9 letters long. 
+For impossible, the word should be 10-12 letters long. 
+The word should be in German and should be commonly used. 
+Do not repeat the same word frequently. 
+Your output should only be 1 word. For example, if I tell you "easy", you could respond with "Haus" or "Baum". 
+The difficulty level is: ${difficulty}. Remember to only respond with the word and nothing else.`,
         });
 
         const generatedWord = response.text.trim();
@@ -130,7 +139,8 @@ async function game(difficulty) {
         wordContainer.innerHTML = ""; // Leere den Container
         for (const letter of word) {
             const letterElement = document.createElement("span");
-            letterElement.textContent = guessedLetters.has(letter) ? letter : "_"; // Zeige Buchstaben oder Unterstrich
+            // Überprüfe, ob der Buchstabe (in Kleinbuchstaben) erraten wurde
+            letterElement.textContent = guessedLetters.has(letter.toLowerCase()) ? letter : "_";
             letterElement.className = "word-letter"; // CSS-Klasse für Styling
             wordContainer.appendChild(letterElement);
         }
@@ -170,7 +180,8 @@ async function game(difficulty) {
         button.disabled = true; // Deaktiviere den Button
         button.classList.add("disabled-button"); // Füge eine CSS-Klasse für deaktivierte Buttons hinzu
 
-        if (!word.includes(lowerCaseLetter)) {
+        // Überprüfe, ob der Buchstabe im Wort enthalten ist
+        if (!word.toLowerCase().includes(lowerCaseLetter)) {
             attemptsLeft--; // Reduziere die verbleibenden Versuche
             drawHangman(); // Aktualisiere das Hangman-Diagramm
         }
@@ -180,11 +191,15 @@ async function game(difficulty) {
 
         // Überprüfe, ob das Spiel vorbei ist
         if (attemptsLeft === 0) {
-            alert(`Game over! The word was: ${word}`);
-            location.reload(); // Lade die Seite neu
-        } else if (Array.from(word).every((letter) => guessedLetters.has(letter.toLowerCase()))) {
-            alert("Congratulations! You guessed the word!");
-            location.reload(); // Lade die Seite neu
+            setTimeout(() => {
+                alert(`Game over! The word was: ${word}`);
+                location.reload(); // Lade die Seite neu
+            }, 500); // Warte 500 Millisekunden
+        } else if (Array.from(word.toLowerCase()).every((letter) => guessedLetters.has(letter.toLowerCase()))) {
+            setTimeout(() => {
+                alert(`Congratulations! You've guessed the word: ${word}`);
+                location.reload(); // Lade die Seite neu
+            }, 500); // Warte 500 Millisekunden
         }
     }
 
