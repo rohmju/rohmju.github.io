@@ -88,6 +88,7 @@ h1 {
     border-color: #4F95DA;
 }
 
+<<<<<<< HEAD
 /* Styling für die Buchstaben im Wort */
 .word-letter {
     font-size: 2rem;
@@ -279,3 +280,12 @@ h1 {
     cursor: not-allowed;
     box-shadow: none;
 }
+=======
+.Difficulty:hover {
+    transition: 0.5s ease-in-out;
+    background-color: red;
+    border-color: darkred;
+    font-size: large;
+}
+
+>>>>>>> 6992fcba790e50f8201ebd88e9c85f6f3da172c1
