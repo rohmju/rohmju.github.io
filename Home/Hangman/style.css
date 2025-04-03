@@ -87,3 +87,195 @@ h1 {
     border-radius: 20px;
     border-color: #4F95DA;
 }
+
+/* Styling für die Buchstaben im Wort */
+.word-letter {
+    font-size: 2rem;
+    margin: 0 5px;
+    border-bottom: 2px solid #000;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
+/* Styling für das Hangman-Diagramm */
+.hangman-part {
+    font-size: 1.2rem;
+    color: red;
+    margin: 5px 0;
+}
+/* Styling für das Hangman-Diagramm */
+#hangman-drawing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+    background: #ffffff;
+    border: 2px solid #91C9FF;
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    height: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.hangman-part {
+    font-size: 1.2rem;
+    color: #e63946;
+    margin: 5px 0;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Zentrierung des gesamten Spiels */
+#hangman-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling für das Wort */
+#word-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin: 20px 0;
+}
+
+.word-letter {
+    font-size: 2rem;
+    margin: 0 5px;
+    border-bottom: 2px solid #333;
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #444;
+}
+
+/* Styling für das Eingabefeld */
+#input-container {
+    margin-bottom: 20px;
+}
+
+#letter-input {
+    font-size: 1.2rem;
+    padding: 10px;
+    width: 50px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#letter-input:focus {
+    border-color: #0077cc;
+}
+
+#submit-letter {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit-letter:hover {
+    background-color: #005fa3;
+}
+
+/* Styling für die Versuche */
+#attempts-container {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* Styling für den Restart-Button */
+#restart-game {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#restart-game:hover {
+    background-color: #c0273a;
+}
+
+/* Animationen */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Styling für das Buchstaben-Panel */
+#alphabet-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px; /* Abstand zwischen den Buttons */
+    max-width: 600px;
+    margin: 20px 0;
+}
+
+/* Styling für die Buchstaben-Buttons */
+.letter-button {
+    font-size: 1.2rem;
+    padding: 10px 15px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.letter-button:hover {
+    background-color: #005fa3;
+    transform: scale(1.1); /* Vergrößert den Button leicht beim Hover */
+}
+
+.letter-button:active {
+    background-color: #004080;
+    transform: scale(0.95); /* Verkleinert den Button leicht beim Klicken */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.letter-button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.disabled-button {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
