@@ -61,34 +61,44 @@ h1 {
 .fly-out {
     animation: flyOut 1s forwards;
 }
+
 .test {
     display: none;
 }
-.smtcool{
+
+.smtcool {
     background-color: #333;
     color: turquoise;
 }
-.smtcooler{
+
+.smtcooler {
     border-radius: 5px;
     background-color: #333;
     color: turquoise;
-    
 }
-.dermarabu{
+
+.dermarabu {
     background-color: bisque;
     align-items: left;
     float: left;
     display: flex;
 }
-.Difficulty{
+
+.Difficulty {
     visibility: hidden;
     background-color: #4F95DA;
-    color:#333;
+    color: #333;
     border-radius: 20px;
     border-color: #4F95DA;
 }
 
-<<<<<<< HEAD
+.Difficulty:hover {
+    transition: 0.5s ease-in-out;
+    background-color: red;
+    border-color: darkred;
+    font-size: large;
+}
+
 /* Styling für die Buchstaben im Wort */
 .word-letter {
     font-size: 2rem;
@@ -105,7 +115,7 @@ h1 {
     color: red;
     margin: 5px 0;
 }
-/* Styling für das Hangman-Diagramm */
+
 #hangman-drawing {
     display: flex;
     justify-content: center;
@@ -120,13 +130,6 @@ h1 {
     height: 300px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
-}
-
-.hangman-part {
-    font-size: 1.2rem;
-    color: #e63946;
-    margin: 5px 0;
-    animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Zentrierung des gesamten Spiels */
@@ -232,6 +235,7 @@ h1 {
         transform: translateY(0);
     }
 }
+
 /* Styling für das Buchstaben-Panel */
 #alphabet-container {
     display: flex;
@@ -280,12 +284,3 @@ h1 {
     cursor: not-allowed;
     box-shadow: none;
 }
-=======
-.Difficulty:hover {
-    transition: 0.5s ease-in-out;
-    background-color: red;
-    border-color: darkred;
-    font-size: large;
-}
-
->>>>>>> 6992fcba790e50f8201ebd88e9c85f6f3da172c1
