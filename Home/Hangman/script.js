@@ -85,11 +85,12 @@ import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI(difficulty) {
     try {
-        const response = await fetch('key.txt');
-        if (!response.ok) {
-            throw new Error('Failed to load API key from key.txt');
+        // Hole den API-Schlüssel aus der Umgebungsvariable
+        const apiKey = process.env.API_KEY || import.meta.env.API_KEY;
+        if (!apiKey) {
+            throw new Error("API key not found in environment variable 'API_KEY'");
         }
-        const apiKey = await response.text();
+
         const ai = new GoogleGenAI({ apiKey });
 
         const aiResponse = await ai.models.generateContent({
@@ -102,11 +103,12 @@ For hard, the word should be 8-9 letters long.
 For impossible, the word should be 10-12 letters long. 
 The word should be in German and should be commonly used. 
 Do not repeat the same word frequently. 
-Your output should only be 1 word. Always a random word that start with a random letter of the alphabet that you choose
+Your output should only be 1 word. Always a random word that starts with a random letter of the alphabet that you choose.
 The difficulty level is: ${difficulty}. Remember to only respond with the word and nothing else.`,
         });
 
         const generatedWord = aiResponse.text.trim();
+        console.log("Generated word:", generatedWord);
         return generatedWord;
     } catch (error) {
         console.error("Error initializing AI or generating content:", error);
