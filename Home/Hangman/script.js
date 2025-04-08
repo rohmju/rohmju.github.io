@@ -86,7 +86,7 @@ import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 async function initializeAI(difficulty) {
     try {
         // Hole den API-Schlüssel aus der Umgebungsvariable
-        const apiKey = process.env.API_KEY || import.meta.env.API_KEY;
+        const apiKey = process.env.KEYV2 || import.meta.env.KEYV2 || process.env.API_KEY || import.meta.env.API_KEY;
         if (!apiKey) {
             throw new Error("API key not found in environment variable 'API_KEY'");
         }
@@ -108,7 +108,7 @@ The difficulty level is: ${difficulty}. Remember to only respond with the word a
         });
 
         const generatedWord = aiResponse.text.trim();
-        console.log("Generated word:", generatedWord);
+        console.log("Generated word:", generatedWord); // Debugging: Protokolliere das generierte Wort
         return generatedWord;
     } catch (error) {
         console.error("Error initializing AI or generating content:", error);
