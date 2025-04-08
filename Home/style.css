@@ -12,6 +12,7 @@ h1 {
 }
 .Knopf {
     background-color: white;
+    color:rgb(44, 73, 73) ;
     border: 2px solid lightgray;
     border-radius: 5px;
     width: fit-content + 10px;
