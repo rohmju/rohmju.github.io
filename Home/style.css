@@ -6,13 +6,13 @@ html {
     
 }
 h1 {
-    color: red;
+    color: white;
     text-align: center;
-    font-family: cursive;
+    font-style:obliquel;
 }
 .Knopf {
-    background-color: lightgray;
-    border: 2px solid darkgray;
+    background-color: white;
+    border: 2px solid lightgray;
     border-radius: 5px;
     width: fit-content + 10px;
     height: fit-content;
@@ -22,13 +22,14 @@ h1 {
 
 .Knopf:hover {
     background-color:transparent;
-    transform: scale(1.1);
+    transform: scale(1.2);
     justify-content: center;
-    transition: 0,5s;
+    transition: 0.5s;
     fill-opacity: 0.5;
     color: white;
+    background-color: rgb(44, 73, 73);
     
-    transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out, opacity 0.5s ease-in-out, color 0.5s ease-in-out;
+    transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out, opacity 0.4s ease-in-out, color 0.4s ease-in-out;
     
     
 }
@@ -41,13 +42,12 @@ h1 {
 }
 
 #inside {
-    background-color: lightsteelblue;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    background-image: url(https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-    border-radius: 20px
+    font-size: 40px;
+    background-color: rgb(40, 65, 65);
+    border-radius: 60px
     ;
 }
 
@@ -56,7 +56,7 @@ h1 {
     font-size: 18px;
     padding: 10px;
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 60px;
     display: flex; 
     justify-content: center; 
     display: block; 
@@ -75,7 +75,8 @@ h1 {
     display: flex;
     align-items: top;
     justify-content: center;
-    gap : 5px;
+    gap : 20px;
     align-items: center;
+    font-size: 200%;
     
 }
