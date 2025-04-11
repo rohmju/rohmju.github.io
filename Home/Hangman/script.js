@@ -17,13 +17,12 @@ function start() {
         return;
     }
 
-    const difficulty = difficultySlider.innerText; // Hole die Schwierigkeit
+    const difficulty = difficultySlider.innerText;
     if (!difficulty) {
         alert("Please select a difficulty!");
         return;
     }
 
-    // Clear the screen and start the game
     const gameContainer = document.body;
     gameContainer.innerHTML = `
         <div id="hangman-container">
@@ -50,11 +49,10 @@ function visible() {
         element.style.display = "inline-block";
     }
 
-    // Dynamisch den Difficulty-Slider erstellen, falls er fehlt
     if (!document.getElementById("Difficultyslider")) {
         const difficultySlider = document.createElement("button");
         difficultySlider.id = "Difficultyslider";
-        difficultySlider.innerText = "Easy"; // Standardwert
+        difficultySlider.innerText = "Easy";
         document.body.appendChild(difficultySlider);
     }
 }
@@ -85,10 +83,9 @@ import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI(difficulty) {
     try {
-        // Hole den API-Schlüssel aus der Umgebungsvariable
-        const apiKey = process.env.API_KEY || import.meta.env.API_KEY;
+        const apiKey = "DEIN_API_SCHLÜSSEL_HIER";
         if (!apiKey) {
-            throw new Error("API key not found in environment variable 'API_KEY'");
+            throw new Error("API key not found");
         }
 
         const ai = new GoogleGenAI({ apiKey });
@@ -116,10 +113,10 @@ The difficulty level is: ${difficulty}. Remember to only respond with the word a
 }
 
 async function game(difficulty) {
-    const word = await initializeAI(difficulty); // Das generierte Wort
-    const maxAttempts = 6; // Maximale Anzahl an Versuchen
+    const word = await initializeAI(difficulty);
+    const maxAttempts = 6;
     let attemptsLeft = maxAttempts;
-    let guessedLetters = new Set(); // Set für bereits geratene Buchstaben
+    let guessedLetters = new Set();
     const wordContainer = document.getElementById("word-container");
     const attemptsContainer = document.getElementById("attempts-container");
     const hangmanDrawing = document.getElementById("hangman-drawing");
@@ -127,10 +124,9 @@ async function game(difficulty) {
     alphabetContainer.id = "alphabet-container";
     document.getElementById("hangman-container").appendChild(alphabetContainer);
 
-    // Funktion zum Erstellen des Buchstaben-Panels
     function createAlphabetPanel() {
         const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-        alphabetContainer.innerHTML = ""; // Leere das Panel
+        alphabetContainer.innerHTML = "";
         alphabet.forEach((letter) => {
             const letterButton = document.createElement("button");
             letterButton.textContent = letter.toUpperCase();
@@ -140,26 +136,22 @@ async function game(difficulty) {
         });
     }
 
-    // Funktion zum Aktualisieren der Wortanzeige
     function updateWordDisplay() {
-        wordContainer.innerHTML = ""; // Leere den Container
+        wordContainer.innerHTML = "";
         for (const letter of word) {
             const letterElement = document.createElement("span");
-            // Überprüfe, ob der Buchstabe (in Kleinbuchstaben) erraten wurde
             letterElement.textContent = guessedLetters.has(letter.toLowerCase()) ? letter : "_";
-            letterElement.className = "word-letter"; // CSS-Klasse für Styling
+            letterElement.className = "word-letter";
             wordContainer.appendChild(letterElement);
         }
     }
 
-    // Funktion zum Aktualisieren der Versuche-Anzeige
     function updateAttemptsDisplay() {
         attemptsContainer.textContent = `Attempts left: ${attemptsLeft}`;
     }
 
-    // Funktion zum Zeichnen des Hangman-Diagramms
     function drawHangman() {
-        hangmanDrawing.innerHTML = ""; // Leere das Hangman-Diagramm
+        hangmanDrawing.innerHTML = "";
         const stages = [
             "Head",
             "Body",
@@ -171,45 +163,41 @@ async function game(difficulty) {
         for (let i = 0; i < maxAttempts - attemptsLeft; i++) {
             const part = document.createElement("div");
             part.textContent = stages[i];
-            part.className = "hangman-part"; // CSS-Klasse für Styling
+            part.className = "hangman-part";
             hangmanDrawing.appendChild(part);
         }
     }
 
-    // Funktion zum Verarbeiten eines Buchstaben-Klicks
     function handleLetterClick(letter, button) {
-        const lowerCaseLetter = letter.toLowerCase(); // Konvertiere den Buchstaben in Kleinbuchstaben
+        const lowerCaseLetter = letter.toLowerCase();
 
-        if (guessedLetters.has(lowerCaseLetter)) return; // Ignoriere bereits geratene Buchstaben
+        if (guessedLetters.has(lowerCaseLetter)) return;
 
-        guessedLetters.add(lowerCaseLetter); // Füge den Buchstaben zu den geratenen hinzu
-        button.disabled = true; // Deaktiviere den Button
-        button.classList.add("disabled-button"); // Füge eine CSS-Klasse für deaktivierte Buttons hinzu
+        guessedLetters.add(lowerCaseLetter);
+        button.disabled = true;
+        button.classList.add("disabled-button");
 
-        // Überprüfe, ob der Buchstabe im Wort enthalten ist
         if (!word.toLowerCase().includes(lowerCaseLetter)) {
-            attemptsLeft--; // Reduziere die verbleibenden Versuche
-            drawHangman(); // Aktualisiere das Hangman-Diagramm
+            attemptsLeft--;
+            drawHangman();
         }
 
-        updateWordDisplay(); // Aktualisiere die Wortanzeige
-        updateAttemptsDisplay(); // Aktualisiere die Versuche-Anzeige
+        updateWordDisplay();
+        updateAttemptsDisplay();
 
-        // Überprüfe, ob das Spiel vorbei ist
         if (attemptsLeft === 0) {
             setTimeout(() => {
                 alert(`Game over! The word was: ${word}`);
-                location.reload(); // Lade die Seite neu
-            }, 500); // Warte 500 Millisekunden
+                location.reload();
+            }, 500);
         } else if (Array.from(word.toLowerCase()).every((letter) => guessedLetters.has(letter.toLowerCase()))) {
             setTimeout(() => {
                 alert(`Congratulations! You've guessed the word: ${word}`);
-                location.reload(); // Lade die Seite neu
-            }, 500); // Warte 500 Millisekunden
+                location.reload();
+            }, 500);
         }
     }
 
-    // Initialisiere die Anzeige
     createAlphabetPanel();
     updateWordDisplay();
     updateAttemptsDisplay();
