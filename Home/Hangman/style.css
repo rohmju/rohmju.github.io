@@ -92,12 +92,7 @@ h1 {
     border-color: #4F95DA;
 }
 
-.Difficulty:hover {
-    transition: 0.5s ease-in-out;
-    background-color: red;
-    border-color: darkred;
-    font-size: large;
-}
+
 
 /* Styling für die Buchstaben im Wort */
 
@@ -126,7 +121,6 @@ h1 {
     color: red;
     margin: 5px 0;
 }
-
 #hangman-drawing {
     display: flex;
     justify-content: center;
@@ -294,4 +288,27 @@ h1 {
     color: #666;
     cursor: not-allowed;
     box-shadow: none;
+}
+#Easy:hover{
+    transition: ease-in-out 1s;
+    background-color: lightgreen;
+    border-color: greenyellow;
+}
+
+#Normal:hover {
+    transition: ease-in-out 1s;
+    background-color: yellow;
+    border-color: rgb(185, 190, 39);
+}
+
+#Hard:hover {
+    transition: ease-in-out 1s;
+    background-color: orange;
+    border-color: darkorange;
+}
+
+#Impossible:hover {
+    transition: ease-in-out 1s;
+    background-color: red;
+    border-color: darkred;
 }
