@@ -1,6 +1,3 @@
-// Define the API key as a constant at the top of the file
-const frenchfrie = "AIzaSyBuKIDaFpVt4sMEtU8FOuZL2H7GiiluB1g";
-
 let choosen = false;
 let selectedwindow = false;
 
@@ -12,7 +9,7 @@ function start() {
     if (!choosen) {
         alert("Please choose a difficulty first!");
         return;
-    } 
+    }
 
     const difficultySlider = document.getElementById("Difficultyslider");
     if (!difficultySlider) {
@@ -81,26 +78,35 @@ window.start = start;
 window.visible = visible;
 window.getthisclasshidden = getthisclasshidden;
 window.youneverseemeagain = youneverseemeagain;
+var content = open("key.txt", "r");
+import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI(difficulty) {
     try {
-        // Use the correct API key variable
-        const frenchfries = frenchfrie;
+        const apiKey = "AIzaSyBuKIDaFpVt" + "4sMEtU8FOuZL2H7GiiluB1g";
+        if (!apiKey) {
+            throw new Error("API key not found");
+        }
 
-        const ai = new GoogleGenAI(frenchfries);
+        // Pass the API key explicitly
+        const ai = new GoogleGenAI({ apiKey });
 
-        const aiResponse = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
-            contents: `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. 
+        const prompt = `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. 
 The word should be a noun and should not contain any special characters or numbers. 
-For easy, the word should be 4-5 letters long.
+For easy, the word should be 4-5 letters long. 
 For medium, the word should be 6-7 letters long. 
 For hard, the word should be 8-9 letters long. 
 For impossible, the word should be 15-40 letters long. 
 The word should be in German and should be commonly used. 
 Do not repeat the same word frequently. 
 Your output should only be 1 word. Always a random word that starts with a random letter of the alphabet that you choose.
-The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. Remember to only respond with the word and nothing else.`,
+The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. Remember to only respond with the word and nothing else.`;
+
+        console.log("Prompt sent to AI:", prompt);
+
+        const aiResponse = await ai.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: prompt,
         });
 
         const generatedWord = aiResponse.text.trim();
@@ -114,13 +120,6 @@ The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. 
 
 async function game(difficulty) {
     const word = await initializeAI(difficulty);
-
-    // Check if the word is valid
-    if (!word || typeof word !== "string") {
-        alert("Failed to generate a word. Please try again.");
-        return;
-    }
-
     const maxAttempts = 6;
     let attemptsLeft = maxAttempts;
     let guessedLetters = new Set();
