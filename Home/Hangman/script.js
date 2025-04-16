@@ -78,12 +78,12 @@ window.start = start;
 window.visible = visible;
 window.getthisclasshidden = getthisclasshidden;
 window.youneverseemeagain = youneverseemeagain;
-
+var content = open("key.txt", "r");
 import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI(difficulty) {
     try {
-        const apiKey = "DEIN_API_SCHLÜSSEL_HIER";
+        const apiKey = "AIzaSyBuKIDaFpVt" + "4sMEtU8FOuZL2H7GiiluB1g";
         if (!apiKey) {
             throw new Error("API key not found");
         }
@@ -97,11 +97,11 @@ The word should be a noun and should not contain any special characters or numbe
 For easy, the word should be 4-5 letters long. 
 For medium, the word should be 6-7 letters long. 
 For hard, the word should be 8-9 letters long. 
-For impossible, the word should be 10-12 letters long. 
+For impossible, the word should be 15-40 letters long. 
 The word should be in German and should be commonly used. 
 Do not repeat the same word frequently. 
 Your output should only be 1 word. Always a random word that starts with a random letter of the alphabet that you choose.
-The difficulty level is: ${difficulty}. Remember to only respond with the word and nothing else.`,
+The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. Remember to only respond with the word and nothing else.`,
         });
 
         const generatedWord = aiResponse.text.trim();
