@@ -84,7 +84,7 @@ window.youneverseemeagain = youneverseemeagain;
 
 async function initializeAI(difficulty) {
     try {
-        // Use the API key constant
+        // Use the correct API key variable
         const frenchfries = frenchfrie;
 
         const ai = new GoogleGenAI(frenchfries);
@@ -108,11 +108,19 @@ The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. 
         return generatedWord;
     } catch (error) {
         console.error("Error initializing AI or generating content:", error);
+        return null; // Return null if an error occurs
     }
 }
 
 async function game(difficulty) {
     const word = await initializeAI(difficulty);
+
+    // Check if the word is valid
+    if (!word || typeof word !== "string") {
+        alert("Failed to generate a word. Please try again.");
+        return;
+    }
+
     const maxAttempts = 6;
     let attemptsLeft = maxAttempts;
     let guessedLetters = new Set();
