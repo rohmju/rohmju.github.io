@@ -81,12 +81,12 @@ window.youneverseemeagain = youneverseemeagain;
 
 async function initializeAI(difficulty) {
     try {
-        const apiKey = "AIzaSyBuKIDaFpVt" + "4sMEtU8FOuZL2H7GiiluB1g";
+        const frenchfries = "AIzaSyBuKIDaFpVt" + "4sMEtU8FOuZL2H7GiiluB1g";
         if (!apiKey) {
             throw new Error("API key not found");
         }
 
-        const ai = new GoogleGenAI({ apiKey });
+        const ai = new GoogleGenAI(frenchfries);
 
         const aiResponse = await ai.models.generateContent({
             model: "gemini-2.0-flash",
