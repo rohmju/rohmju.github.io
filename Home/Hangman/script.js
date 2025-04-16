@@ -1,3 +1,6 @@
+// Define the API key as a constant at the top of the file
+const frenchfrie = "AIzaSyBuKIDaFpVt4sMEtU8FOuZL2H7GiiluB1g";
+
 let choosen = false;
 let selectedwindow = false;
 
@@ -9,7 +12,7 @@ function start() {
     if (!choosen) {
         alert("Please choose a difficulty first!");
         return;
-    }
+    } 
 
     const difficultySlider = document.getElementById("Difficultyslider");
     if (!difficultySlider) {
@@ -81,10 +84,8 @@ window.youneverseemeagain = youneverseemeagain;
 
 async function initializeAI(difficulty) {
     try {
-        const frenchfries = "AIzaSyBuKIDaFpVt" + "4sMEtU8FOuZL2H7GiiluB1g";
-        if (!apiKey) {
-            throw new Error("API key not found");
-        }
+        // Use the API key constant
+        const frenchfries = frenchfrie;
 
         const ai = new GoogleGenAI(frenchfries);
 
@@ -92,7 +93,7 @@ async function initializeAI(difficulty) {
             model: "gemini-2.0-flash",
             contents: `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. 
 The word should be a noun and should not contain any special characters or numbers. 
-For easy, the word should be 4-5 letters long. 
+For easy, the word should be 4-5 letters long.
 For medium, the word should be 6-7 letters long. 
 For hard, the word should be 8-9 letters long. 
 For impossible, the word should be 15-40 letters long. 
