@@ -90,15 +90,13 @@ async function initializeAI(difficulty) {
 
         const prompt = `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. The word should be a noun and commonly used in German, without any special characters or numbers. For easy, the word should be 4-5 letters long. For medium, the word should be 6-7 letters long. For hard, the word should be 8-9 letters long. For impossible, the word should be 15-40 letters long. The word should not repeat frequently and should not be in the previously generated list of words. If possible, consider synonyms to increase variety. Your output should be only 1 word, starting with a random letter of the alphabet that you choose. The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. Respond solely with the word and nothing else.`;
 
-        console.log("Prompt sent to AI:", prompt);
 
         const aiResponse = await ai.models.generateContent({
             model: "gemini-2.0-flash",
             contents: prompt,
         });
-
+        
         const generatedWord = aiResponse.text.trim();
-        console.log("Generated word:", generatedWord);
         return generatedWord;
     } catch (error) {
         console.error("Error initializing AI or generating content:", error);
