@@ -204,7 +204,7 @@ async function game(difficulty) {
         }
 
     }
-    async function createHelp(){
+    async function createHelp_for_Dummies(){
         const helpbutton = document.createElement("button");
         document.getElementById("hangman-container").appendChild(helpbutton);
 
@@ -216,7 +216,6 @@ async function game(difficulty) {
                 throw new Error("API key not found");
             }
     
-            // Pass the API key explicitly
             const ai2 = new GoogleGenAI({ apiKey });
         const prompt2 = `give me a hint for the word ${word} it should be related to the word. example: if the word is "fenster" you should response with: "Teil eines Hauses wo man durchschauen kann" and nothing else.`
         const aiResponse = await ai2.models.generateContent({
@@ -236,6 +235,6 @@ async function game(difficulty) {
 createAlphabetPanel();
     updateWordDisplay();
     updateAttemptsDisplay();
-    createHelp();
+    createHelp_for_Dummies();
 
 }
