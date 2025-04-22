@@ -87,8 +87,6 @@ async function initializeAI(difficulty) {
         if (!apiKey) {
             throw new Error("API key not found");
         }
-
-        // Pass the API key explicitly
         const ai = new GoogleGenAI({ apiKey });
 
         const prompt = `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. 
@@ -114,7 +112,7 @@ The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. 
         return generatedWord;
     } catch (error) {
         console.error("Error initializing AI or generating content:", error);
-        return null; // Return null if an error occurs
+        return null;
     }
 }
 
