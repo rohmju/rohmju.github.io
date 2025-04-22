@@ -29,9 +29,7 @@ function start() {
             <h1>Hangman</h1>
             <div id="hangman-drawing"></div>
             <div id="word-container"></div>
-            <div id="input-container">
-                <input type="text" id="letter-input" maxlength="1" placeholder="Enter a letter" />
-                <button id="submit-letter">Submit</button>
+            
             </div>
             <div id="attempts-container"></div>
             <button id="restart-game" onclick="location.reload()">Restart Game</button>
