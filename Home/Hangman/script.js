@@ -78,7 +78,6 @@ window.start = start;
 window.visible = visible;
 window.getthisclasshidden = getthisclasshidden;
 window.youneverseemeagain = youneverseemeagain;
-var content = open("key.txt", "r");
 import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI(difficulty) {
