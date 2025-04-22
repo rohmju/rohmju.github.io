@@ -88,16 +88,7 @@ async function initializeAI(difficulty) {
         }
         const ai = new GoogleGenAI({ apiKey });
 
-        const prompt = `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. 
-The word should be a noun and should not contain any special characters or numbers. 
-For easy, the word should be 4-5 letters long. 
-For medium, the word should be 6-7 letters long. 
-For hard, the word should be 8-9 letters long. 
-For impossible, the word should be 15-40 letters long. 
-The word should be in German and should be commonly used. 
-Do not repeat the same word frequently. 
-Your output should only be 1 word. Always a random word that starts with a random letter of the alphabet that you choose.
-The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. Remember to only respond with the word and nothing else.`;
+        const prompt = `I want you to generate a random word based on the following difficulty levels: easy, medium, hard, and impossible. The word should be a noun and commonly used in German, without any special characters or numbers. For easy, the word should be 4-5 letters long. For medium, the word should be 6-7 letters long. For hard, the word should be 8-9 letters long. For impossible, the word should be 15-40 letters long. The word should not repeat frequently and should not be in the previously generated list of words. If possible, consider synonyms to increase variety. Your output should be only 1 word, starting with a random letter of the alphabet that you choose. The difficulty level is: ${difficulty}. Use shortcuts like ue for ü and so on. Respond solely with the word and nothing else.`;
 
         console.log("Prompt sent to AI:", prompt);
 
