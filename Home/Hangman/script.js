@@ -1,6 +1,6 @@
 let choosen = false;
 let selectedwindow = false;
-
+const Hintbutton = document.createElement("button");
 function switchtotrue() {
     choosen = true;
 }
@@ -202,9 +202,40 @@ async function game(difficulty) {
                 location.reload();
             }, 500);
         }
+
+    }
+    async function createHelp(){
+        const helpbutton = document.createElement("button");
+        document.getElementById("hangman-container").appendChild(helpbutton);
+
+        helpbutton.textContent = "Hint";
+        helpbutton.id = "Hintbutton";
+        try {
+            const apiKey = "AIzaSyBuKIDaFpVt" + "4sMEtU8FOuZL2H7GiiluB1g";
+            if (!apiKey) {
+                throw new Error("API key not found");
+            }
+    
+            // Pass the API key explicitly
+            const ai2 = new GoogleGenAI({ apiKey });
+        const prompt2 = `give me a hint for the word ${word} it should be related to the word. example: if the word is "fenster" you should response with: "Teil eines Hauses wo man durchschauen kann" and nothing else.`
+        const aiResponse = await ai2.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: prompt2,
+    });
+    helpbutton.addEventListener("click", () => {
+        const hint = aiResponse.text.trim();
+        alert(`Hint: ${hint}`); 
+        document.getElementById("hangman-container").appendChild(helpbutton);
+    });
+} catch (error) {
+    console.error("Error generating hint:", error);
+}
     }
 
-    createAlphabetPanel();
+createAlphabetPanel();
     updateWordDisplay();
     updateAttemptsDisplay();
+    createHelp();
+
 }
