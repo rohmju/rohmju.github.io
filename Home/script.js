@@ -43,7 +43,9 @@ function openCat() {
 }
 function moving(returnbutton) {
     returnbutton.style.left = "2000px";
-    returnbutton.style.backgroundImage = 'url("https://th.bing.com/th/id/OIP.EWgi7rIvjjBXCfZLH1LDJgAAAA?rs=1&pid=ImgDetMain")';
+    returnbutton.style.backgroundImage = 'url("./plane.png")'; 
+    returnbutton.style.backgroundColor = 'transparent'; 
+    returnbutton.style.border = 'none';
     returnbutton.style.height = '180px';
     returnbutton.style.width = '180px';
     returnbutton.innerText = '';
