@@ -42,7 +42,7 @@ function openCat() {
     body.appendChild(returnbutton);
 }
 function moving(returnbutton) {
-    returnbutton.style.left = "2000px";
+    returnbutton.style.left = "6000px";
     returnbutton.style.backgroundImage = 'url("./plane.png")'; 
     returnbutton.style.backgroundColor = 'transparent';          
     returnbutton.style.border = 'none';
