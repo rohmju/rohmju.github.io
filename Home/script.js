@@ -1,58 +1,57 @@
-function openYT() {
-    const body = document.querySelector('html');
-    body.innerHTML = '';
-    const iframe = document.createElement('iframe'); 
-    const returnbutton = document.createElement('button');
-    iframe.src = 'https://www.youtube.com/embed/0i1sbW26-K8?autoplay=1&loop=1&playlist=0i1sbW26-K8&mute=1';
-    iframe.style.position = 'fixed';
-    iframe.style.top = '0';
-    iframe.style.left = '0';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.border = 'none';
-    iframe.style.zIndex = '-1'; 
-    returnbutton.innerText = 'Return';
-    returnbutton.style.position = 'fixed';
-    returnbutton.style.top = '10px';
-    returnbutton.style.left = '10px';
-    returnbutton.style.zIndex = '1';
-    returnbutton.setAttribute('id', 'returnbutton',
-    );
-    returnbutton.addEventListener('mouseover', () => {moving(returnbutton)});
-    
-        
-    returnbutton.addEventListener('click', () => {
+function openYouTubeVideo() {
+    const htmlBody = document.querySelector('html');
+    htmlBody.innerHTML = '';
+    const videoIframe = document.createElement('iframe'); 
+    const returnButton = document.createElement('button');
+    videoIframe.src = 'https://www.youtube.com/embed/0i1sbW26-K8?autoplay=1&loop=1&playlist=0i1sbW26-K8&mute=1';
+    videoIframe.style.position = 'fixed';
+    videoIframe.style.top = '0';
+    videoIframe.style.left = '0';
+    videoIframe.style.width = '100%';
+    videoIframe.style.height = '100%';
+    videoIframe.style.border = 'none';
+    videoIframe.style.zIndex = '-1'; 
+    returnButton.innerText = 'Return';
+    returnButton.style.position = 'fixed';
+    returnButton.style.top = '10px';
+    returnButton.style.left = '10px';
+    returnButton.style.zIndex = '1';
+    returnButton.setAttribute('id', 'returnButton');
+    returnButton.addEventListener('mouseover', () => {animateReturnButton(returnButton)});
+    returnButton.addEventListener('click', () => {
         window.location.reload();
     });
-    body.appendChild(iframe);
-    body.appendChild(returnbutton);
+    htmlBody.appendChild(videoIframe);
+    htmlBody.appendChild(returnButton);
 }
-function openCat() {
-    const body = document.querySelector('body');
-    body.innerHTML = '';
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://www.youtube.com/embed/0i1sbW26-K8?autoplay=1&loop=1&playlist=0i1sbW26-K8&mute=1';
-    const returnbutton = document.createElement('button');
-    returnbutton.innerText = 'Return';
-    returnbutton.addEventListener('click', () => {
+
+function openCatVideo() {
+    const htmlBody = document.querySelector('body');
+    htmlBody.innerHTML = '';
+    const videoIframe = document.createElement('iframe');
+    videoIframe.src = 'https://www.youtube.com/embed/0i1sbW26-K8?autoplay=1&loop=1&playlist=0i1sbW26-K8&mute=1';
+    const returnButton = document.createElement('button');
+    returnButton.innerText = 'Return';
+    returnButton.addEventListener('click', () => {
         window.location.reload();
     });
 
-    body.appendChild(iframe);
-    body.appendChild(returnbutton);
+    htmlBody.appendChild(videoIframe);
+    htmlBody.appendChild(returnButton);
 }
-function moving(returnbutton) {
-    returnbutton.style.left = "6000px";
-    returnbutton.style.backgroundImage = 'url("./plane.png")'; 
-    returnbutton.style.backgroundColor = 'transparent';          
-    returnbutton.style.border = 'none';
-    returnbutton.style.height = '180px';
-    returnbutton.style.width = '180px';
-    returnbutton.innerText = '';
-    returnbutton.style.backgroundSize = '180px 180px';
-    returnbutton.style.transition = 'left 4s';
-    returnbutton.style.transitionDelay = '1s';
+
+function animateReturnButton(returnButton) {
+    returnButton.style.left = "6000px";
+    returnButton.style.backgroundImage = 'url("./plane.png")'; 
+    returnButton.style.backgroundColor = 'transparent';          
+    returnButton.style.border = 'none';
+    returnButton.style.height = '180px';
+    returnButton.style.width = '180px';
+    returnButton.innerText = '';
+    returnButton.style.backgroundSize = '180px 180px';
+    returnButton.style.transition = 'left 4s';
+    returnButton.style.transitionDelay = '1s';
     setTimeout(() => {
-        returnbutton.style.color = 'red';
+        returnButton.style.color = 'red';
     }, 1000);
 }
