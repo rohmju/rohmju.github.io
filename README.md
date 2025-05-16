@@ -1,4 +1,4 @@
-*# Rohmju's GitHub.io Project
+# Rohmju's GitHub.io Project
 
 This project is a simple interactive webpage that includes buttons for various functionalities, such as opening YouTube videos, displaying a cat video, and navigating to a Minesweeper game (work in progress).
 
