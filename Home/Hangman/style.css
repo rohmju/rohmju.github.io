@@ -105,7 +105,7 @@ p {
 
 
 
-/* Styling für die Buchstaben im Wort */
+
 
 .word-letter {
     font-size: 2rem;
@@ -116,7 +116,7 @@ p {
     text-align: center;
 }
 
-/*Ausrichtung der verschiedenen Schwierigkeitsstufen*/
+
 
 #difficultyOptions{
     display: flex;
@@ -126,7 +126,7 @@ p {
     gap: 4px;
 }
 
-/* Styling für das Hangman-Diagramm */
+
 .hangman-part {
     font-size: 1.2rem;
     color: red;
@@ -148,7 +148,7 @@ p {
     margin: 20px 0;
 }
 
-/* Zentrierung des gesamten Spiels */
+
 #hangman-container {
     display: flex;
     flex-direction: column;
@@ -163,7 +163,7 @@ p {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling für das Wort */
+
 #word-container {
     display: flex;
     justify-content: center;
@@ -181,7 +181,7 @@ p {
     color: #444;
 }
 
-/* Styling für das Eingabefeld */
+
 #input-container {
     margin-bottom: 20px;
 }
@@ -217,14 +217,14 @@ p {
     background-color: #005fa3;
 }
 
-/* Styling für die Versuche */
+
 #attempts-container {
     font-size: 1.2rem;
     margin-bottom: 20px;
     color: #444;
 }
 
-/* Styling für den Restart-Button */
+
 #restart-game {
     font-size: 1.2rem;
     padding: 10px 20px;
@@ -252,18 +252,18 @@ p {
     }
 }
 
-/* Styling für das Buchstaben-Panel */
+
 #alphabet-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 20px;
-    gap: 10px; /* Abstand zwischen den Buttons */
+    gap: 10px; 
     max-width: 600px;
     margin: 20px 0;
 }
 
-/* Styling für die Buchstaben-Buttons */
+
 .letter-button {
     font-size: 1.2rem;
     padding: 10px 15px;
@@ -278,12 +278,12 @@ p {
 
 .letter-button:hover {
     background-color: #005fa3;
-    transform: scale(1.1); /* Vergrößert den Button leicht beim Hover */
+    transform: scale(1.1); 
 }
 
 .letter-button:active {
     background-color: #004080;
-    transform: scale(0.95); /* Verkleinert den Button leicht beim Klicken */
+    transform: scale(0.95); 
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -323,7 +323,7 @@ p {
     background-color: red;
     border-color: darkred;
 }
-/*Kannst ändern, nur vorlage */
+ 
 #Hintbutton {
     font-size: 2rem;
     padding: 10px 15px;
