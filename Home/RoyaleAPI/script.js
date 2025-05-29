@@ -36,3 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+button.addEventListener("click", async () => {
+    resultDiv.textContent = "Loading...";
+
+    try {
+        const response = await fetch("https://clashproxy.onrender.com/cards");
+        if (!response.ok) throw new Error("API error: " + response.status);
+
+        const data = await response.json();
+        resultDiv.textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+        resultDiv.textContent = "Error: " + error.message;
+    }
+});
