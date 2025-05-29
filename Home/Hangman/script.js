@@ -84,7 +84,7 @@ import { GoogleGenAI } from './libs/genai/dist/web/index.mjs';
 
 async function initializeAI(difficulty) {
     try {
-        const apiKey = "AIzaSyBuKIDaFpVt4sMEtU8FOuZL2H7GiiluB1g";
+        const apiKey = "AIzaSyA0Qa6efUmodHyb3MGFuVUmspFBRCNJeXA";
         if (!apiKey) {
             throw new Error("API key not found");
         }
