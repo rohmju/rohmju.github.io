@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Hier dein Clash Royale API-Key
-const API_KEY = 'Bearer DEIN_API_KEY_HIER';
+const API_KEY = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjNkZTUwYzlhLWVjZGQtNDdmZi05NzY4LTU5MDYzMDI1MjBkMSIsImlhdCI6MTc0ODU0NzE1MCwic3ViIjoiZGV2ZWxvcGVyLzY0OWIwMTUzLTAxOTAtNjYwYy1hMTI5LWZiZjUxNWQ3NTZmNSIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyIxOC4xNTYuMTU4LjUzIiwiMTguMTU2LjQyLjIwMCIsIjUyLjU5LjEwMy41NCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.yfQ4LfiGwUW1V31p3HALd50-XqqTXW9_LG3NG269_w0fFv8gEoWOLOYAZ04kci8MEPJos4Mk6cohSFeG3vW-5g';
 
 app.use(cors()); // Erlaubt alle Ursprünge (z. B. github.io)
 
