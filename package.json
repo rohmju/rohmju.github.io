@@ -1,6 +1,27 @@
 {
   "dependencies": {
     "@google/genai": "^0.7.0",
-    "axios": "^1.9.0"
-  }
+    "axios": "^1.9.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "node-fetch": "^3.3.2"
+  },
+  "name": "rohmju.github.io",
+  "version": "1.0.0",
+  "description": "This project is a simple interactive webpage that includes buttons for various functionalities, such as opening YouTube videos, displaying a cat video, and navigating to a Minesweeper game (work in progress).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohmju/rohmju.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rohmju/rohmju.github.io/issues"
+  },
+  "homepage": "https://github.com/rohmju/rohmju.github.io#readme"
 }
