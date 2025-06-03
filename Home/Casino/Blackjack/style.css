@@ -1,7 +1,7 @@
 body {
   font-family: 'Play', sans-serif;
-  background: rgb(198, 182, 162);
-  color: rgb(43, 39, 39);
+  background: rgb(243, 228, 210);
+  color: rgb(80, 68, 68);
   text-align: center;
   margin: 0;
   padding: 0;
@@ -10,13 +10,17 @@ body {
 h1 {
   margin-top: 20px;
   font-size: 36px;
-  color: rgb(161, 96, 118);
+  color: pink;
 }
 
+li{
+  text-align: center;
+}
+   
 #chips-display {
   font-size: 22px;
   margin: 15px 0;
-  color: rgb(161, 96, 118);
+  color:pink;
 }
 
 #bet-area {
