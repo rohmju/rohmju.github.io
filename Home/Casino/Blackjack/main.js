@@ -135,7 +135,7 @@ function drawGame() {
   updateChipsDisplay();
   endGame("Unentschieden. Dein Einsatz wurde zurückgegeben.");
 }
-
+ 
 function endGame(message) {
   document.getElementById("hit-button").disabled = true;
   document.getElementById("stand-button").disabled = true;

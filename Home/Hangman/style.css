@@ -198,14 +198,14 @@ p {
 }
 
 #letter-input:focus {
-    border-color: #0077cc;
+    border-color: #483C32;
 }
 
 #submit-letter {
     font-size: 1.2rem;
     padding: 10px 20px;
     margin-left: 10px;
-    background-color: #0077cc;
+    background-color: #483C32;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -214,7 +214,7 @@ p {
 }
 
 #submit-letter:hover {
-    background-color: #005fa3;
+    background-color: #6c594a;
 }
 
 
@@ -267,7 +267,7 @@ p {
 .letter-button {
     font-size: 1.2rem;
     padding: 10px 15px;
-    background-color: #0077cc;
+    background-color: #705d4e;
     color: white;
     border: none;
     border-radius: 100%;
@@ -277,12 +277,12 @@ p {
 }
 
 .letter-button:hover {
-    background-color: #005fa3;
+    background-color: #483C32;
     transform: scale(1.1); 
 }
 
 .letter-button:active {
-    background-color: #004080;
+    background-color: #483C32;
     transform: scale(0.95); 
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
