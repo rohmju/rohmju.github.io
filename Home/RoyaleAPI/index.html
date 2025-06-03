@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CR Cards</title>
+  <title>CR Player Info</title>
   <style>
     body {
       font-family: sans-serif;
@@ -30,8 +30,7 @@
   </header>
 
   <main>
-    <p>please Select the Service u want to use</p>
-    
+    <p>Please enter a player tag (with or without #):</p>
   </main>
 
   <script>
@@ -40,11 +39,11 @@
 
       const input = document.createElement("input");
       input.id = "playerId";
-      input.placeholder = "Player ID (optional)";
+      input.placeholder = "Player Tag (e.g. #2PP)";
       main.appendChild(input);
 
       const button = document.createElement("button");
-      button.textContent = "Get Cards";
+      button.textContent = "Get Player Info";
       main.appendChild(button);
 
       const resultDiv = document.createElement("div");
@@ -52,11 +51,19 @@
       main.appendChild(resultDiv);
 
       button.addEventListener("click", async () => {
+        let tag = input.value.trim().toUpperCase();
+        if (!tag) {
+          resultDiv.textContent = "Please enter a player tag.";
+          return;
+        }
         resultDiv.textContent = "Loading...";
 
         try {
-          const response = await fetch("https://rohmju-github-io.onrender.com/cards");
-          if (!response.ok) throw new Error("API error: " + response.status);
+          const response = await fetch(`http://localhost:3001/api/player/${tag}`);
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || "API error: " + response.status);
+          }
 
           const data = await response.json();
           resultDiv.textContent = JSON.stringify(data, null, 2);
