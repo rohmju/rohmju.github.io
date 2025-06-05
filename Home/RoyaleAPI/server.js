@@ -75,5 +75,9 @@ app.get("/api/player/:tag", async (req, res) => {
     res.status(500).json({ error: "Player not found or API error!" });
   }
 });
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`🟢 Backend online at http://localhost:${PORT}`);
+});
 
 export default app;
