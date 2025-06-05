@@ -57,7 +57,7 @@ const API_URL = process.env.ROYALE_API_URL || "https://api.clashroyale.com/v1";
 const API_TOKEN = process.env.ROYALE_API_TOKEN;
 
 if (!API_TOKEN) {
-  throw new Error("❌ Royale API token is missing. Set ROYALE_API_TOKEN in Vercel env vars.");
+  throw new Error("❌ Royale API token is missing. Set ROYALE_API_TOKEN in Render env vars.");
 }
 
 app.get("/api/player/:tag", async (req, res) => {
@@ -75,7 +75,8 @@ app.get("/api/player/:tag", async (req, res) => {
     res.status(500).json({ error: "Player not found or API error!" });
   }
 });
-const PORT = process.env.PORT || 3001;
+
+const PORT = process.env.PORT || 10000; // Render uses 10000 internally
 app.listen(PORT, () => {
   console.log(`🟢 Backend online at http://localhost:${PORT}`);
 });

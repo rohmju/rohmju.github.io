@@ -34,55 +34,53 @@
   </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const main = document.querySelector("main");
+  document.addEventListener("DOMContentLoaded", () => {
+    const main = document.querySelector("main");
 
-      const input = document.createElement("input");
-      input.id = "playerId";
-      input.placeholder = "Player Tag (e.g. #2PP)";
-      main.appendChild(input);
+    const input = document.createElement("input");
+    input.id = "playerId";
+    input.placeholder = "Player Tag (e.g. #2PP)";
+    main.appendChild(input);
 
-      const button = document.createElement("button");
-      button.textContent = "Get Player Info";
-      main.appendChild(button);
+    const button = document.createElement("button");
+    button.textContent = "Get Player Info";
+    main.appendChild(button);
 
-      const resultDiv = document.createElement("div");
-      resultDiv.id = "result";
-      main.appendChild(resultDiv);
+    const resultDiv = document.createElement("div");
+    resultDiv.id = "result";
+    main.appendChild(resultDiv);
 
-      button.addEventListener("click", async () => {
-        let tag = input.value.trim().toUpperCase();
-        if (!tag) {
-          resultDiv.textContent = "Please enter a player tag.";
-          return;
+    button.addEventListener("click", async () => {
+      let tag = input.value.trim().toUpperCase();
+      if (!tag) {
+        resultDiv.textContent = "Please enter a player tag.";
+        return;
+      }
+      resultDiv.textContent = "Loading...";
+
+      let apiBase;
+      if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+        apiBase = "http://localhost:10000";
+      } else {
+        apiBase = "https://rohmju-github-io.onrender.com";
+      }
+
+      try {
+        const response = await fetch(`${apiBase}/api/player/${encodeURIComponent(tag)}`);
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || "API error: " + response.status);
         }
-        resultDiv.textContent = "Loading...";
 
-        // Detect if running on GitHub Pages or local
-        let apiBase;
-        if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-          apiBase = "http://localhost:3001";
-        } else {
-          // Hier die URL deines Backends eintragen, wenn du es z.B. auf Render deployt hast:
-          apiBase = "rohmju-github-io-git-main-rohmjus-projects.vercel.app";
-        }
-
-        try {
-          const response = await fetch(`${apiBase}/api/player/${encodeURIComponent(tag)}`);
-          if (!response.ok) {
-            const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error || "API error: " + response.status);
-          }
-
-          const data = await response.json();
-          resultDiv.textContent = JSON.stringify(data, null, 2);
-          console.log("API Response:", data);
-        } catch (error) {
-          resultDiv.textContent = "Error: " + error.message;
-          console.error("API Error:", error);
-        }
-      });
+        const data = await response.json();
+        resultDiv.textContent = JSON.stringify(data, null, 2);
+        console.log("API Response:", data);
+      } catch (error) {
+        resultDiv.textContent = "Error: " + error.message;
+        console.error("API Error:", error);
+      }
     });
+  });
   </script>
 
 </body>
