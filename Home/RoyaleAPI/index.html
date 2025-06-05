@@ -58,12 +58,10 @@
       }
       resultDiv.textContent = "Loading...";
 
-      let apiBase;
-      if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-        apiBase = "http://localhost:10000";
-      } else {
-        apiBase = "https://rohmju-github-io.onrender.com";
-      }
+      const apiBase =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1"
+          ? "http://localhost:10000"
+          : "https://rohmju-github-io.onrender.com"; // ✅ Correct backend for production
 
       try {
         const response = await fetch(`${apiBase}/api/player/${encodeURIComponent(tag)}`);
