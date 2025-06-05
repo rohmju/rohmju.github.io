@@ -58,8 +58,17 @@
         }
         resultDiv.textContent = "Loading...";
 
+        // Detect if running on GitHub Pages or local
+        let apiBase;
+        if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+          apiBase = "http://localhost:3001";
+        } else {
+          // Hier die URL deines Backends eintragen, wenn du es z.B. auf Render deployt hast:
+          apiBase = "rohmju-github-io-git-main-rohmjus-projects.vercel.app";
+        }
+
         try {
-          const response = await fetch(`http://localhost:3001/api/player/${tag}`);
+          const response = await fetch(`${apiBase}/api/player/${encodeURIComponent(tag)}`);
           if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
             throw new Error(errData.error || "API error: " + response.status);
