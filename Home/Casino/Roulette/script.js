@@ -5,7 +5,6 @@ const container = document.querySelector('.circle-container');
 // Remove existing buttons if any
 container.innerHTML = '';
 
-// Dynamically create and append 37 buttons
 for (let i = 0; i < n; i++) {
     const btn = document.createElement('button');
     btn.textContent = i;
@@ -13,7 +12,6 @@ for (let i = 0; i < n; i++) {
     btn.id = `btn-${i}`;
 }
 
-// After appending, select all buttons
 const buttons = container.querySelectorAll('button');
 const centerX = container.offsetWidth / 2;
 const centerY = container.offsetHeight / 2;
