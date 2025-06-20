@@ -1,0 +1,30 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.header1 {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.circle-container {
+  width: 600px;
+  height: 600px;
+  position: relative;
+  margin-top: 32px;
+}
+
+.circle-container button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #a94d4d;
+  color: #fff;
+  font-size: 1rem;
+  position: absolute;
+  cursor: pointer;
+}
