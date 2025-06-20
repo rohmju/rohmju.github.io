@@ -28,8 +28,7 @@ h1 {
     transition: 0.5s;
     fill-opacity: 0.5;
     color: white;
-    background-color: rgb(44, 73, 73);
-    
+    background-color: rgb(44, 73, 73);  
     transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out, opacity 0.4s ease-in-out, color 0.4s ease-in-out;
     
     
