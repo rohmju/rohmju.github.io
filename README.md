@@ -10,7 +10,6 @@
   - [📚 Inhaltsverzeichnis](#-inhaltsverzeichnis)
   - [📝 Überblick](#-überblick)
   - [🚀 Features](#-features)
-  - [🖼️ Screenshots](#️-screenshots)
   - [⚡ Wie funktioniert's?](#-wie-funktionierts)
   - [🛠️ Installation \& Start](#️-installation--start)
   - [🗂️ Projektstruktur](#️-projektstruktur)
@@ -43,12 +42,6 @@ Das Ziel: **Casino-Feeling, Spielspaß und smarte Tools – alles an einem Ort!*
   - Neue Spiele und Tools lassen sich einfach hinzufügen
 
 ---
-
-## 🖼️ Screenshots
-
-| Lobby | Roulette | Blackjack | Hangman |
-|-------|----------|-----------|---------|
-| ![Lobby](pics/footprint.png) | ![Roulette](Home/Casino/Roulette/logo.png) | ![Blackjack](Home/Casino/Blackjack/style.css) | ![Hangman](Home/Hangman/hangman.png) |
 
 ---
 
