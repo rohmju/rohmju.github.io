@@ -1,6 +1,6 @@
 # 🎲 Rohmju's GitHub.io Project 🎲
 
-> **A modern, interactive web playground for games, demos, and fun!**
+> **Dein moderner Web-Spielplatz für Casino, Games & mehr – alles live, alles stylish!**
 
 ---
 
@@ -9,26 +9,74 @@
 - [🎲 Rohmju's GitHub.io Project 🎲](#-rohmjus-githubio-project-)
   - [📚 Inhaltsverzeichnis](#-inhaltsverzeichnis)
   - [📝 Überblick](#-überblick)
+  - [🚀 Features](#-features)
+  - [🖼️ Screenshots](#️-screenshots)
+  - [⚡ Wie funktioniert's?](#-wie-funktionierts)
+  - [🛠️ Installation \& Start](#️-installation--start)
   - [🗂️ Projektstruktur](#️-projektstruktur)
-  - [Features](#features)
-    - [Buttons](#buttons)
-    - [Animations](#animations)
-    - [Styling](#styling)
-  - [Wie es funktioniert](#wie-es-funktioniert)
-    - [JavaScript-Funktionen](#javascript-funktionen)
-    - [CSS-Highlights](#css-highlights)
-  - [Installation \& Start](#installation--start)
-  - [Verwendung](#verwendung)
-  - [Technologien](#technologien)
   - [To-Do \& Ideen](#to-do--ideen)
-  - [Credits \& Danksagung](#credits--danksagung)
+  - [Credits](#credits)
 
 ---
 
 ## 📝 Überblick
 
-Willkommen zu **Rohmju's GitHub.io Project** – einer Sammlung von coolen Webspielen und Tools, darunter Roulette, Blackjack, Hangman, Slots, eine RoyaleAPI-Integration und mehr.  
-Das Projekt ist modular aufgebaut, responsiv und einfach zu erweitern.
+**Rohmju's GitHub.io** ist eine interaktive Webplattform mit einer wachsenden Sammlung an modernen Browser-Games und Tools.  
+Ob Roulette, Blackjack, Hangman, Slots oder RoyaleAPI – alles läuft direkt im Browser, ohne Installation.  
+Das Ziel: **Casino-Feeling, Spielspaß und smarte Tools – alles an einem Ort!**
+
+---
+
+## 🚀 Features
+
+- **🎰 Casino-Suite:**  
+  - **Roulette:** Realistisches, animiertes Rad mit perfektem Spin und klassischem Layout  
+  - **Blackjack:** Spiele gegen den Dealer, setze Chips, nutze Split & Double Down  
+  - **Slots:** Einfacher Slot-Automat mit Gewinn-Animationen  
+- **🧩 Hangman:**  
+  - Verschiedene Schwierigkeitsgrade, KI-generierte Wörter, Tippsystem  
+- **🛡️ RoyaleAPI:**  
+  - Clash Royale Spielerinfos live abrufen  
+- **✨ Moderne UI:**  
+  - Animierte Buttons, responsive Design, Casino-Atmosphäre  
+- **🔗 Modular & erweiterbar:**  
+  - Neue Spiele und Tools lassen sich einfach hinzufügen
+
+---
+
+## 🖼️ Screenshots
+
+| Lobby | Roulette | Blackjack | Hangman |
+|-------|----------|-----------|---------|
+| ![Lobby](pics/footprint.png) | ![Roulette](Home/Casino/Roulette/logo.png) | ![Blackjack](Home/Casino/Blackjack/style.css) | ![Hangman](Home/Hangman/hangman.png) |
+
+---
+
+## ⚡ Wie funktioniert's?
+
+- **Lobby:**  
+  Starte von der Hauptseite und wähle dein Spiel oder Tool per Klick.
+- **Casino:**  
+  Genieße Roulette, Blackjack oder Slots – alles mit animierten, echten Casino-Elementen.
+- **Hangman:**  
+  Rate das Wort, fordere die KI heraus, nutze Tipps.
+- **RoyaleAPI:**  
+  Gib einen Clash Royale Tag ein und erhalte Live-Daten zu Spielern.
+
+---
+
+## 🛠️ Installation & Start
+
+1. **Repository klonen:**  
+
+   ```sh
+   git clone https://github.com/rohmju/rohmju.github.io.git
+   ```
+
+2. **In Browser öffnen:**  
+   Öffne die Datei `index.html` in einem modernen Webbrowser.
+3. **Interagieren:**  
+   Klicke auf die Buttons, um die verschiedenen Spiele und Tools auszuprobieren.
 
 ---
 
@@ -40,58 +88,16 @@ Das Projekt besteht aus folgenden Dateien:
 - **style.css**: Die CSS-Datei, die das Styling für die Webseite definiert.
 - **script.js**: Die JavaScript-Datei, die die Logik für die interaktiven Buttons und Animationen enthält.
 
-## Features
-
-### Buttons
-- **Minesweeper (WIP)**: Leitet zu einem Minesweeper-Spiel weiter (derzeit in Entwicklung).
-- **YT Video**: Öffnet ein YouTube-Video in einem eingebetteten iFrame mit aktiviertem Autoplay und Loop.
-- **Cat (WIP)**: Öffnet ein Katzenvideo in einem eingebetteten iFrame (in Arbeit).
-
-### Animations
-- Der "Return"-Button verfügt über einen Hover-Effekt, der ihn über den Bildschirm bewegt und sein Erscheinungsbild ändert.
-
-### Styling
-- Die Webseite verwendet einen dunkel-schiefergrauen Hintergrund mit einem ansprechenden Layout.
-- Buttons haben Hover-Effekte, einschließlich Skalierung und Farbänderungen.
-
-## Wie es funktioniert
-
-### JavaScript-Funktionen
-1. **openYT()**: 
-   - Löscht den aktuellen Inhalt der Seite.
-   - Betten Sie ein YouTube-Video in ein iFrame ein.
-   - Fügt einen "Return"-Button hinzu, um die Seite neu zu laden.
-
-2. **openCat()**:
-   - Ähnlich wie `openYT()`, aber für ein Katzenvideo vorgesehen.
-
-3. **moving(returnbutton)**:
-   - Animiert den "Return"-Button, wenn er darüber gefahren wird, indem er nach rechts verschoben wird und sein Erscheinungsbild ändert.
-
-### CSS-Highlights
-- `.Knopf`: Stile die Buttons mit Hover-Effekten für Skalierungs- und Farbänderungen.
-- `.container` und `#inside`: Zentrieren Sie den Inhalt und fügen Sie ein Hintergrundbild für ein poliertes Aussehen hinzu.
-
-## Installation & Start
-1. Klone das Repository oder lade die Dateien herunter.
-2. Öffne `index.html` in einem Webbrowser.
-3. Interagiere mit den Buttons, um die Funktionen zu erkunden.
-
-## Verwendung
-- Klicke auf die verschiedenen Buttons, um die jeweiligen Funktionen auszuprobieren.
-- Nutze den "Return"-Button, um zur Hauptseite zurückzukehren.
-
-## Technologien
-- HTML5
-- CSS3
-- JavaScript (ES6+)
+---
 
 ## To-Do & Ideen
+
 - Vervollständige das Minesweeper-Spiel.
 - Verbessere die Funktionalität des "Cat"-Buttons.
 - Füge weitere interaktive Funktionen und Animationen hinzu.
 
-## Credits & Danksagung
-- Hintergrundbild: [Pexels](https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg)
-- Katzenvideo: YouTube
-- Entwickelt von Rohmju
+---
+
+## Credits
+
+- Leonie für schönes CSS und Casino Features
