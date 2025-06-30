@@ -18,7 +18,7 @@ for (let i = 0; i < n; i++) {
     const btn = document.createElement('button');
     btn.className = 'roulette-ball';
     btn.id = `btn-${i}`;
-
+    
     const label = document.createElement('span');
     label.className = 'number-label';
     label.textContent = i;
