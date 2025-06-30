@@ -29,7 +29,8 @@ const wheelRect = container.getBoundingClientRect();
 const centerX = wheel.offsetWidth / 2;
 const centerY = wheel.offsetHeight / 2;
 const btnSize = 48;
-const outerRadius = wheel.offsetWidth / 2 - btnSize / 2 - 8; // 8px border offset
+const innerCircleSize = 320;
+const outerRadius = (wheel.offsetWidth - innerCircleSize) / 2 + innerCircleSize / 2 - btnSize / 2;
 
 buttons.forEach((btn, i) => {
     const angleRad = (2 * Math.PI / n) * i - Math.PI / 2;
