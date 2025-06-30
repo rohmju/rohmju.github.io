@@ -62,7 +62,7 @@ let lastAngle = 0;
 
 if (wheel && spinbutton) {
     spinbutton.addEventListener('click', () => {
-        const randomDelta = Math.floor(Math.random() * 360) + 920;
+        const randomDelta = Math.floor(Math.random() * 2000) + 920;
         lastAngle += randomDelta;
         wheel.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
         wheel.style.transform = `rotate(${lastAngle}deg)`;
