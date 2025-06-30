@@ -10,6 +10,9 @@ container.appendChild(wheel);
 const inner = document.createElement('div');
 inner.className = 'inner-circle';
 container.appendChild(inner);
+const dreieck = document.createElement('div');
+dreieck.className = 'dreieck';
+document.body.appendChild(dreieck);
 
 for (let i = 0; i < n; i++) {
     const btn = document.createElement('button');
@@ -63,5 +66,15 @@ if (wheel && spinbutton) {
         lastAngle += randomDelta;
         wheel.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
         wheel.style.transform = `rotate(${lastAngle}deg)`;
+        spinbutton.textContent = 'Spinning...';
+        spinbutton.disabled = true;
+        setTimeout(() => {
+            resetSpin();
+        }, 5000);
+        
     });
+}
+function resetSpin() {
+    spinbutton.textContent = 'Spin';
+    spinbutton.disabled = false;
 }
