@@ -57,21 +57,32 @@ const spinbutton = document.getElementById('spin-button');
 let lastAngle = 0;
 let kugelAngle = 0;
 
+// --- Kugel immer exakt mittig auf Button platzieren ---
 function positionKugel(angleDeg) {
-    // Positioniere die Kugel auf dem gleichen Kreis wie die Buttons
-    const kugelRadius = radius + btnSize / 2 + 8; // etwas außerhalb der Buttons
-    const angleRad = (angleDeg - 90) * Math.PI / 180;
+    // Kugel exakt wie Buttons auf dem Kreis platzieren!
     const kugelSize = kugel.offsetWidth;
+    // Korrigierter Radius: Buttons und Kugel müssen exakt denselben Mittelpunkt und Kreis nutzen!
+    // Wenn Kugel kleiner als Button: Radius leicht erhöhen, damit sie mittig sitzt
+    const kugelRadius = radius + (btnSize - kugelSize) / 2;
+    const angleRad = (angleDeg - 90) * Math.PI / 180;
     const x = centerX + kugelRadius * Math.cos(angleRad) - kugelSize / 2;
     const y = centerY + kugelRadius * Math.sin(angleRad) - kugelSize / 2;
     kugel.style.left = `${x}px`;
     kugel.style.top = `${y}px`;
 }
 
+// --- Kugel startet immer auf der 0 ---
 window.addEventListener('resize', () => {
     positionKugel(kugelAngle);
 });
-setTimeout(() => positionKugel(kugelAngle), 0);
+window.addEventListener('DOMContentLoaded', () => {
+    kugelAngle = 0; // Start auf 0
+    positionKugel(kugelAngle);
+});
+setTimeout(() => {
+    kugelAngle = 0;
+    positionKugel(kugelAngle);
+}, 0);
 
 if (wheel && spinbutton) {
     spinbutton.addEventListener('click', () => {
@@ -83,8 +94,8 @@ if (wheel && spinbutton) {
         wheel.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
         wheel.style.transform = `rotate(${lastAngle}deg)`;
 
-        // Kugel bekommt den Gegendrehwinkel zur Zielzahl
-        kugelAngle = (360 / n) * ziel;
+        // Kugel landet immer relativ zum aktuellen Radwinkel auf dem Ziel
+        kugelAngle = (360 / n) * ziel - (lastAngle % 360);
         kugel.style.transition = 'left 5s cubic-bezier(0.25, 0.1, 0.25, 1), top 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
         positionKugel(kugelAngle);
 
