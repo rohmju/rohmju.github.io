@@ -84,10 +84,12 @@ body {
     z-index: 3;
 }
 .dreieck {
-width: 0px;
-height: 0px;
--webkit-transform:rotate(360deg);
-transform: rotate(360deg);
-border-style: solid;
-border-width: 0 125px 300px 125px;
-border-color: transparent transparent #24a786 transparent;}
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  border: 3px solid #aaa;
+  position: absolute;
+  z-index: 20;
+  box-shadow: 0 2px 8px #0005;
+}
