@@ -1,6 +1,17 @@
 const n = 37;
-const container = document.querySelector('.circle-container');
+let money = 1000;
+let currentBet = 0;
+let betNumber = '';
+let betColor = '';
 
+function updateMoneyUI() {
+    document.getElementById('money-amount').textContent = money;
+    document.getElementById('bet-number').textContent = betNumber !== '' ? betNumber : '-';
+    document.getElementById('bet-color').textContent = betColor !== '' ? betColor : '-';
+    document.getElementById('bet-amount-input').max = money;
+}
+
+const container = document.querySelector('.circle-container');
 container.innerHTML = '';
 
 const wheel = document.createElement('div');
@@ -13,7 +24,7 @@ container.appendChild(inner);
 
 const kugel = document.createElement('div');
 kugel.className = 'dreieck';
-container.appendChild(kugel); // Kugel unabhängig vom Wheel
+container.appendChild(kugel); // Zeiger unabhängig vom Wheel
 
 for (let i = 0; i < n; i++) {
     const btn = document.createElement('button');
@@ -60,19 +71,14 @@ let kugelAngle = 0;
 // --- Kugel immer exakt mittig auf Button platzieren ---
 function positionKugel(angleDeg) {
     const kugelSize = kugel.offsetWidth;
-
-    // Move triangle outside the ball circle slightly
     const extraOffset = 18; // tweak this as needed to sit just above the rim
     const kugelRadius = radius + extraOffset;
-
     const angleRad = (angleDeg - 90) * Math.PI / 180;
     const x = centerX + kugelRadius * Math.cos(angleRad) - kugelSize / 2;
     const y = centerY + kugelRadius * Math.sin(angleRad) - kugelSize / 2;
-
     kugel.style.left = `${x}px`;
     kugel.style.top = `${y}px`;
 }
-
 
 // --- Kugel startet immer auf der 0 ---
 window.addEventListener('resize', () => {
@@ -81,22 +87,64 @@ window.addEventListener('resize', () => {
 window.addEventListener('DOMContentLoaded', () => {
     kugelAngle = 0; // Start auf 0
     positionKugel(kugelAngle);
+    updateMoneyUI();
 });
 setTimeout(() => {
     kugelAngle = 0;
     positionKugel(kugelAngle);
 }, 0);
 
+// Einsatz setzen
+const placeBetBtn = document.getElementById('place-bet');
+placeBetBtn.addEventListener('click', function() {
+    const betError = document.getElementById('bet-error');
+    betError.textContent = '';
+    let betType = document.getElementById('bet-type').value;
+    let betValue = parseInt(document.getElementById('bet-amount-input').value, 10);
+
+    if (placeBetBtn.disabled) return; // Doppelklick verhindern
+
+    if (isNaN(betValue) || betValue < 1) {
+        betError.textContent = 'Bet must be at least 1€!';
+        return;
+    }
+    if (betValue > money) {
+        betError.textContent = 'You cannot bet more than you have!';
+        return;
+    }
+
+    if (betType === 'number') {
+        let betInput = parseInt(document.getElementById('bet-number-input').value, 10);
+        if (isNaN(betInput) || betInput < 0 || betInput > 36) {
+            betError.textContent = 'Please enter a valid number between 0 and 36.';
+            return;
+        }
+        betNumber = betInput;
+        betColor = '';
+    } else {
+        betColor = document.getElementById('bet-color-input').value;
+        betNumber = '';
+    }
+    currentBet = betValue;
+    money -= betValue;
+    updateMoneyUI();
+    placeBetBtn.disabled = true; // Nach Einsatz setzen deaktivieren
+});
+
 if (wheel && spinbutton) {
     spinbutton.addEventListener('click', () => {
+        if (currentBet === 0) {
+            alert('Bitte zuerst Einsatz platzieren!');
+            return;
+        }
         // Zufällige Zielzahl bestimmen
         const ziel = Math.floor(Math.random() * n);
 
         // Berechne den Zielwinkel für das Wheel (so dass die Zielzahl oben steht)
-        lastAngle = -((3600 / n) * ziel);
+        lastAngle = -((3600 / n) * ziel) + 5 * 360; // 5 Umdrehungen für Animation
 
         // Animation für das Wheel
-        wheel.style.transition = 'transform 8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        wheel.style.transition = 'transform 2s cubic-bezier(0.25, 0.1, 0.25, 1)';
         wheel.style.transform = `rotate(${lastAngle}deg)`;
 
         // Kugel bleibt oben (keine Animation nötig, aber für Konsistenz mitgeben)
@@ -110,19 +158,16 @@ if (wheel && spinbutton) {
         setTimeout(() => {
             // Button und Farbe auslesen
             const result = getCurrentButtonAndColor();
-            console.log('Kugel liegt auf:', result.number, 'Farbe:', result.color);
-
+            handleSpinResult(result);
             spinbutton.textContent = 'Spin';
             spinbutton.disabled = false;
+            placeBetBtn.disabled = false; // Einsatz wieder erlauben nach Runde
         }, 2000);
     });
 }
 
 // Korrekte Auslesefunktion (immer oben ist die gezogene Zahl)
 function getCurrentButtonAndColor() {
-    // Die Zahl, auf der die Kugel liegt, ist die gezogene Zielzahl
-    // Da das Wheel so gedreht wird, dass sie oben ist, ist das immer 0° (kugelAngle = 0)
-    // Finde den Button, der aktuell oben ist:
     let ziel = Math.round(((-lastAngle) / (360 / n))) % n;
     if (ziel < 0) ziel += n;
     const btn = document.getElementById(`btn-${ziel}`);
@@ -131,4 +176,38 @@ function getCurrentButtonAndColor() {
         color = window.getComputedStyle(btn).backgroundColor;
     }
     return { number: ziel, color, btn };
+}
+
+// Bet-Auswahl umschalten
+const betType = document.getElementById('bet-type');
+const numberChoice = document.getElementById('bet-number-choice');
+const colorChoice = document.getElementById('bet-color-choice');
+betType.addEventListener('change', function() {
+    if (this.value === 'number') {
+        numberChoice.style.display = '';
+        colorChoice.style.display = 'none';
+    } else {
+        numberChoice.style.display = 'none';
+        colorChoice.style.display = '';
+    }
+});
+function handleSpinResult(result) {
+    let win = false;
+    if (betNumber !== '' && result.number == betNumber) {
+        money += currentBet * 36;
+        win = true;
+    } else if (betColor && (
+        (betColor === 'Red' && result.color === 'rgb(255, 0, 0)') ||
+        (betColor === 'Black' && result.color === 'rgb(0, 0, 0)')
+    )) {
+        money += currentBet * 2;
+        win = true;
+    }
+    if (win) {
+        alert('You win!');
+    } else {
+        alert('You lose!');
+    }
+    currentBet = 0;
+    updateMoneyUI();
 }

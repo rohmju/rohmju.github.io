@@ -354,6 +354,38 @@
     resetButtons();
   });
 
+  document.getElementById('place-bet').addEventListener('click', function() {
+    const betError = document.getElementById('bet-error');
+    betError.textContent = '';
+    let betType = document.getElementById('bet-type').value;
+    let betValue = parseInt(document.getElementById('bet-amount-input').value, 10);
+
+    if (isNaN(betValue) || betValue < 1) {
+        betError.textContent = 'Der Einsatz muss mindestens 1€ betragen!';
+        return;
+    }
+    if (betValue > balance) {
+        betError.textContent = 'Sie können nicht mehr setzen, als Sie haben!';
+        return;
+    }
+
+    if (betType === 'number') {
+        let betInput = parseInt(document.getElementById('bet-number-input').value, 10);
+        if (isNaN(betInput) || betInput < 0 || betInput > 36) {
+            betError.textContent = 'Bitte geben Sie eine gültige Zahl zwischen 0 und 36 ein.';
+            return;
+        }
+        betNumber = betInput;
+        betColor = '';
+    } else {
+        betColor = document.getElementById('bet-color-input').value;
+        betNumber = '';
+    }
+    currentBet = betValue;
+    balance -= betValue;
+    updateBalance();
+});
+
   updateBalance();
   resetButtons();
 })();
