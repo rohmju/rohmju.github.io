@@ -59,17 +59,20 @@ let kugelAngle = 0;
 
 // --- Kugel immer exakt mittig auf Button platzieren ---
 function positionKugel(angleDeg) {
-    // Kugel exakt wie Buttons auf dem Kreis platzieren!
     const kugelSize = kugel.offsetWidth;
-    // Korrigierter Radius: Buttons und Kugel müssen exakt denselben Mittelpunkt und Kreis nutzen!
-    // Wenn Kugel kleiner als Button: Radius leicht erhöhen, damit sie mittig sitzt
-    const kugelRadius = radius + (btnSize - kugelSize) / 2;
+
+    // Move triangle outside the ball circle slightly
+    const extraOffset = 18; // tweak this as needed to sit just above the rim
+    const kugelRadius = radius + extraOffset;
+
     const angleRad = (angleDeg - 90) * Math.PI / 180;
     const x = centerX + kugelRadius * Math.cos(angleRad) - kugelSize / 2;
     const y = centerY + kugelRadius * Math.sin(angleRad) - kugelSize / 2;
+
     kugel.style.left = `${x}px`;
     kugel.style.top = `${y}px`;
 }
+
 
 // --- Kugel startet immer auf der 0 ---
 window.addEventListener('resize', () => {
@@ -86,28 +89,46 @@ setTimeout(() => {
 
 if (wheel && spinbutton) {
     spinbutton.addEventListener('click', () => {
-        // Zufällige Zielzahl
+        // Zufällige Zielzahl bestimmen
         const ziel = Math.floor(Math.random() * n);
-        // Rad dreht wie gehabt
-        const randomDelta = Math.floor(Math.random() * 2000) + 920;
-        lastAngle += randomDelta;
-        wheel.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+        // Berechne den Zielwinkel für das Wheel (so dass die Zielzahl oben steht)
+        lastAngle = -((3600 / n) * ziel);
+
+        // Animation für das Wheel
+        wheel.style.transition = 'transform 8s cubic-bezier(0.25, 0.1, 0.25, 1)';
         wheel.style.transform = `rotate(${lastAngle}deg)`;
 
-        // Kugel landet immer relativ zum aktuellen Radwinkel auf dem Ziel
-        kugelAngle = (360 / n) * ziel - (lastAngle % 360);
-        kugel.style.transition = 'left 5s cubic-bezier(0.25, 0.1, 0.25, 1), top 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        // Kugel bleibt oben (keine Animation nötig, aber für Konsistenz mitgeben)
+        kugel.style.transition = 'left 2s cubic-bezier(0.25, 0.1, 0.25, 1), top 2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+        kugelAngle = 0;
         positionKugel(kugelAngle);
 
         spinbutton.textContent = 'Spinning...';
         spinbutton.disabled = true;
+
         setTimeout(() => {
-            resetSpin();
-        }, 5000);
+            // Button und Farbe auslesen
+            const result = getCurrentButtonAndColor();
+            console.log('Kugel liegt auf:', result.number, 'Farbe:', result.color);
+
+            spinbutton.textContent = 'Spin';
+            spinbutton.disabled = false;
+        }, 2000);
     });
 }
 
-function resetSpin() {
-    spinbutton.textContent = 'Spin';
-    spinbutton.disabled = false;
+// Korrekte Auslesefunktion (immer oben ist die gezogene Zahl)
+function getCurrentButtonAndColor() {
+    // Die Zahl, auf der die Kugel liegt, ist die gezogene Zielzahl
+    // Da das Wheel so gedreht wird, dass sie oben ist, ist das immer 0° (kugelAngle = 0)
+    // Finde den Button, der aktuell oben ist:
+    let ziel = Math.round(((-lastAngle) / (360 / n))) % n;
+    if (ziel < 0) ziel += n;
+    const btn = document.getElementById(`btn-${ziel}`);
+    let color = '';
+    if (btn) {
+        color = window.getComputedStyle(btn).backgroundColor;
+    }
+    return { number: ziel, color, btn };
 }

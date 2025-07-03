@@ -84,12 +84,30 @@ body {
     z-index: 3;
 }
 .dreieck {
-  width: 24px;
-  height: 24px;
-  background: white;
-  border-radius: 50%;
-  border: 3px solid #aaa;
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 28px solid #deb887;
+  background: none;
+  border-radius: 0;
   position: absolute;
   z-index: 20;
-  box-shadow: 0 2px 8px #0005;
+  box-shadow: none;
+  transform: rotate(180deg); /* ← Dreht das Dreieck */
+}
+
+#returntocasino {
+    position: static;
+    display: block;
+    margin: 40px auto 0 auto;
+    background-color: #4d94a9;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 24px;
+    width: fit-content;
+    box-shadow: 0 2px 8px #0003;
+    text-align: center;
 }
