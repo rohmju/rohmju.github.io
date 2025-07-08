@@ -1,3 +1,4 @@
+console.log ${{API KEY SUPERBASE.SUPERBASE_KEY}}
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 const supabaseUrl = window.env.SUPABASE_URL;
 const supabaseKey = window.env.SUPABASE_KEY;
