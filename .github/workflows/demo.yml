@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main  # adjust this if your main branch is named differently
+      - main
 
 jobs:
   run-app:
@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: '18'
 
-      - run: npm install
+      - name: Move to Home folder
+        working-directory: Home
+        run: npm install
 
-      - run: node index.js
+      - name: Run App
+        working-directory: Home
+        run: node index.js  # or whatever your main file is
