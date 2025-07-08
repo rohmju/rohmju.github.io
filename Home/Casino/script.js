@@ -1,6 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-const supabaseUrl = 'https://whanfrajisrghcsktdyv.supabase.co'
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4ODQwOTYsImV4cCI6MjA2NzQ2MDA5Nn0.mgR_VSslwqLrvf9iE1IxRY9aUjYvSrxjUa-bfRlyRR8"
+const supabaseUrl = window.env.SUPABASE_URL;
+const supabaseKey = window.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function main() {
@@ -9,7 +9,6 @@ async function main() {
     appearLoginButton();
     console.log('Casino page loaded');
     fetchdata(); //fetches Data from the database will be romoved later
-    console.log('Data fetched from Supabase');
     createloginbox();
     
 }
@@ -25,10 +24,13 @@ function appearLoginButton(){
     console.log('Login button appeared');
 }
 async function fetchdata(){
+    console.log("fetching Data...")
     let { data: userss, error } = await supabase
       .from('userss')
       .select('username,password')
-    console.log(userss)
+    if (error == null){
+        console.log("Data fetched sucsesfully")
+    } else console.log(error)
 }
 function createloginbox(){
     const loginBox = document.createElement('div');
@@ -37,15 +39,15 @@ function createloginbox(){
     loginBox.style.visibility ="hidden"
     const inputfield1 = document.createElement('input');
     inputfield1.placeholder = 'Username';
-    const p = document.createElement('input');
-    p.type = 'password';
-    p.placeholder = 'Password';
+    const inputfield2 = document.createElement('input');
+    inputfield2.type = 'password';
+    inputfield2.placeholder = 'Password';
     const btn = document.createElement('button');
     btn.textContent = 'Login';
     const msg = document.createElement('div');
-    [inputfield1, p, btn, msg].forEach(e => loginBox.appendChild(e));
+    [inputfield1, inputfield2, btn, msg].forEach(e => loginBox.appendChild(e));
     btn.onclick = async () => {
-        const { value: username } = inputfield1, { value: password } = p;
+        const { value: username } = inputfield1, { value: password } = inputfield2;
         if (!username || !password) return msg.textContent = 'Enter username and password.';
         const { data } = await supabase.from('userss').select('username,password').eq('username', username).single();
         if (data && data.password === password) {
@@ -55,6 +57,9 @@ function createloginbox(){
             msg.textContent = 'Invalid username or password.';
         }
     };
+}
+function signup(){
+    const signupbox = document.createElement("div")
 }
 function makevisible(){
     document.querySelector('.loginbox').style.visibility = 'visible';
