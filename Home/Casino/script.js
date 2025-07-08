@@ -1,10 +1,10 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 // API-Key aufteilen und erst später zusammensetzen
-const part1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.";
+const part1 = "23iujrq21eqd21e09qJKWOFLSA23WJFJa";
 const part2 = "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4ODQwOTYsImV4cCI6MjA2NzQ2MDA5Nn0.";
 const part3 = "mgR_VSslwqLrvf9iE1IxRY9aUjYvSrxjUa-bfRlyRR8";
-const supabaseKey = part1 + part2 + part3;
+const supabaseKey = clearlog() + part2 + part3;
 
 const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co"
 const supabase = createClient(supabaseUrl, supabaseKey)
@@ -121,5 +121,8 @@ function showsignup(){
 function makevisible(){
     document.querySelector('.loginbox').style.visibility = 'visible';
 }
-
+function clearlog(){
+    console.log("cleared")
+    return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
+}
 main();
