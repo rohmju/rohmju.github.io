@@ -1,7 +1,7 @@
-console.log ${{API KEY SUPERBASE.SUPERBASE_KEY}}
+
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-const supabaseUrl = window.env.SUPABASE_URL;
-const supabaseKey = window.env.SUPABASE_KEY;
+const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co"
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8"
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function main() {
