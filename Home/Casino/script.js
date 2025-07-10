@@ -19,6 +19,7 @@ async function main() {
     fetchdata(); //fetches Data from the database will be removed later
     createloginbox();
     signup();
+
     
 }
 
@@ -166,7 +167,7 @@ function clearlog(){
     console.log("cleared")
     return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
 }
-function switchtosubPage(){
+function update_ui_withuser(){
 
     
 }
@@ -176,4 +177,5 @@ function setCookie(username) {
             console.log("cookies set")
             
         }
+    
 main();
