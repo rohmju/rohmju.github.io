@@ -175,3 +175,20 @@ body {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
+.Profile-Data{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background-color: #00755E;
+  border-radius: 20px;
+
+  
+
+}
+#Profile-Data-box{
+visibility: hidden;
+}

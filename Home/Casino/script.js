@@ -77,9 +77,11 @@ function createloginbox(){
         const { data } = await supabase.from('userss').select('username,password').eq('username', username).single();
         if (data && data.password === password) {
             msg.textContent = 'Login successful!';
+            mogging=true;
             setCookie(username)
             loginBox.style.visibility = 'hidden';
-            mogging=true;
+            loggedui();
+            
         } else {
             msg.textContent = 'Invalid username or password.';
         }
@@ -168,9 +170,10 @@ function clearlog(){
     console.log("cleared")
     return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
 }
-function update_ui_withuser(){
+function loggedui(){
+    const ui = document.getElementById("Profile-Data-box")
+    ui.style.visibility="visible"
 
-    
 }
 function setCookie(username) {
             
