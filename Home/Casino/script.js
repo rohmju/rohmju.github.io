@@ -13,6 +13,7 @@ const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co"
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 async function main() {
+    
     appearsignupButton();
     appearLoginButton();
     console.log('Casino page loaded');
@@ -177,5 +178,6 @@ function setCookie(username) {
             console.log("cookies set")
             
         }
-    
+
+
 main();
