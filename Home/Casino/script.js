@@ -7,8 +7,8 @@ const supabaseKey = clearlog() + part2 + part3;
 let clicked1 = false;
 let clicked2 = false;
 let mogging = false;
+let username = ""
 const divbutton = document.getElementById("signbuttons")
-
 const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co"
 const supabase = createClient(supabaseUrl, supabaseKey)
 
@@ -19,6 +19,7 @@ async function main() {
     fetchdata(); //fetches Data from the database will be removed later
     createloginbox();
     signup();
+    
 }
 
 function appearsignupButton(){
@@ -74,6 +75,7 @@ function createloginbox(){
         const { data } = await supabase.from('userss').select('username,password').eq('username', username).single();
         if (data && data.password === password) {
             msg.textContent = 'Login successful!';
+            setCookie(username)
             loginBox.style.visibility = 'hidden';
             mogging=true;
         } else {
@@ -102,8 +104,8 @@ function signup() {
     [inputfield3, inputfield4, btn2, msg2].forEach(e => signupbox.appendChild(e));
 
     btn2.onclick = async () => {
-        const username = inputfield3.value;
-        const password = inputfield4.value;
+        username = inputfield3.value;
+        password = inputfield4.value;
         
 
         if (!username || !password) {
@@ -114,6 +116,7 @@ function signup() {
         let { error } = await supabase.from('userss').insert([{ username, password }]);
         if (!error) {
             msg2.textContent = "Signup successful! You can now log in.";
+
             signupbox.style.visibility = "hidden";
         } else {
             msg2.textContent = "Signup failed. Username might already exist.";
@@ -163,4 +166,14 @@ function clearlog(){
     console.log("cleared")
     return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
 }
+function switchtosubPage(){
+
+    
+}
+function setCookie(username) {
+            
+            document.cookie = `userInfo=${username}; path=/Home/Casino`;
+            console.log("cookies set")
+            
+        }
 main();
