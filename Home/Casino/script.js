@@ -122,7 +122,6 @@ function signup() {
     }
 }
 
-
 function showsignup(){
     if (clicked2==false){
     document.querySelector('.signupbox').style.visibility = 'visible';
