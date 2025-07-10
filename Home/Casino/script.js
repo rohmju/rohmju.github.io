@@ -23,7 +23,7 @@ async function main() {
 
 function appearsignupButton(){
     const signupButton = document.createElement("button");
-    signupButton.className = "login-button";
+    signupButton.className = "sign-up-button";
     signupButton.textContent = "sign up!"
     signupButton.onclick = () => {showsignup()};
     signupButton.style.visibility = "visible"
@@ -33,7 +33,7 @@ function appearsignupButton(){
 
 function appearLoginButton(){
     const loginButton = document.createElement('button');
-    loginButton.className = 'c';
+    loginButton.className = 'login-button';
     loginButton.textContent = 'Login';
     loginButton.onclick = () => {
         makevisible()}
