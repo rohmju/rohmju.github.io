@@ -1,30 +1,113 @@
 body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .header1 {
-  text-align: center;
-  margin-top: 24px;
+    text-align: center;
+    margin-top: 24px;
+}
+
+.circle-container-butfortheonedumbbutton {
+    position: relative;
+    width: 600px;
+    height: 600px;
 }
 
 .circle-container {
-  width: 600px;
-  height: 600px;
-  position: relative;
-  margin-top: 32px;
+    width: 600px;
+    height: 600px;
+    position: relative;
+    background-color: #5c4033;
+    border-radius: 50%;
+    box-shadow: 0 0 40px 10px #3a2415;
+    margin: 0 auto;
+    border: 8px solid #deb887;
+    overflow: hidden;
 }
 
-.circle-container button {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: none;
-  background: #a94d4d;
-  color: #fff;
-  font-size: 1rem;
+.wheel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: center;
+}
+
+.inner-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    background: #fff8dc;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px 4px #bfa77a inset;
+    z-index: 1;
+}
+
+.roulette-ball {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    position: absolute;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.roulette-ball .number-label {
+    display: inline-block;
+    transform: rotate(calc(-1 * var(--angle, 0deg)));
+}
+
+#spin-button {
+    background: #4d94a9;
+    border-radius: 10%;
+    width: 100px;
+    height: 32px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+.dreieck {
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 28px solid #deb887;
+  background: none;
+  border-radius: 0;
   position: absolute;
-  cursor: pointer;
+  z-index: 20;
+  box-shadow: none;
+  transform: rotate(180deg); /* ← Dreht das Dreieck */
+}
+
+#returntocasino {
+    position: static;
+    display: block;
+    margin: 40px auto 0 auto;
+    background-color: #4d94a9;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 24px;
+    width: fit-content;
+    box-shadow: 0 2px 8px #0003;
+    text-align: center;
 }

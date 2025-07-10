@@ -53,3 +53,4 @@ dkms.conf
 #API key 
 *.py
 *.env
+env.js
