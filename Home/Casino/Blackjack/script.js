@@ -359,5 +359,7 @@
 })();
 
 document.getElementById('btn-return').addEventListener('click', () => {
-  window.location.href = '/../Home/index.html';
+  window.location.href = './../home.html';
+
+
 });
