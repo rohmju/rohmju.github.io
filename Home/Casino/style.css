@@ -31,6 +31,11 @@ body {
     align-content: center;
     text-align: center;
 }
+#signbuttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
 /* CSS */
 .Game {
   align-items: center;
@@ -91,6 +96,7 @@ body {
   display: inline-flex;
   font-family: "JetBrains Mono",monospace;
   height: 48px;
+  width: 100px;
   justify-content: center;
   line-height: 1;
   list-style: none;
@@ -136,6 +142,7 @@ body {
   display: inline-flex;
   font-family: "JetBrains Mono",monospace;
   height: 48px;
+  width: 100px;
   justify-content: center;
   line-height: 1;
   list-style: none;
