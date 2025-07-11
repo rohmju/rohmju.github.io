@@ -74,7 +74,7 @@ function createloginbox(){
     btn.onclick = async () => {
         const { value: username } = inputfield1, { value: password } = inputfield2;
         if (!username || !password) return msg.textContent = 'Enter username and password.';
-        const { data } = await supabase.from('userss').select('username,password').eq('username', username).single();
+        let { data } = await supabase.from('userss').select('username,password').eq('username', username).single();
         if (data && data.password === password) {
             msg.textContent = 'Login successful!';
             mogging=true;
@@ -172,6 +172,7 @@ function clearlog(){
 }
 function loggedui(){
     const ui = document.getElementById("Profile-Data-box")
+    ui
     ui.style.visibility="visible"
 
 }
