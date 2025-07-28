@@ -171,9 +171,10 @@ function clearlog(){
     return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
 }
 function loggedui(){
-    const ui = document.getElementById("Profile-Data-box")
-    ui
-    ui.style.visibility="visible"
+const ui = document.getElementById("Profile-Data-box");
+const usernameui = ui.querySelector("#username2");
+usernameui.textContent = document.cookie;
+ui.style.visibility = "visible";
 
 }
 function setCookie(username) {
