@@ -21,6 +21,11 @@ async function main() {
     createloginbox();
     signup();
 
+    const logoutBtn = document.getElementById("logout-button");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logout);
+    }
+
     
 }
 
@@ -176,6 +181,17 @@ const usernameui = ui.querySelector("#username2");
 usernameui.textContent = document.cookie;
 ui.style.visibility = "visible";
 
+}
+export function logout() {
+    mogging = false;
+    clicked1 = false;
+    clicked2 = false;
+    document.querySelector('.loginbox').style.visibility = 'hidden';
+    document.querySelector('.signupbox').style.visibility = 'hidden';
+    const ui = document.getElementById("Profile-Data-box");
+    ui.style.visibility = "hidden";
+    alert("You have been logged out.");
+    document.cookie = null;
 }
 function setCookie(username) {
             
