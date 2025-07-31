@@ -259,38 +259,42 @@ async function updatemoney(money) {
     
 }
 function permissionPopup() {
+window.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('permission-popup');
+    const acceptBtn = document.getElementById('accept-btn');
+    const declineBtn = document.getElementById('decline-btn');
+
     function setCookie(name, value, days) {
-  const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-}
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
 
-function getCookie(name) {
-  return document.cookie.split('; ').reduce((r, v) => {
-    const parts = v.split('=');
-    return parts[0] === name ? decodeURIComponent(parts[1]) : r
-  }, '');
-}
+    function getCookie(name) {
+        return document.cookie.split('; ').reduce((r, v) => {
+            const parts = v.split('=');
+            return parts[0] === name ? decodeURIComponent(parts[1]) : r
+        }, '');
+    }
 
-const popup = document.getElementById('permission-popup');
-const acceptBtn = document.getElementById('accept-btn');
-const declineBtn = document.getElementById('decline-btn');
+    if (getCookie('ipConsent') === 'true') {
+        popup.style.display = 'none';
+    } else {
+        popup.style.display = 'flex';
+    }
 
-acceptBtn.addEventListener('click', () => {
-  setCookie('ipConsent', 'true', 30); // store consent for 30 days
-  popup.style.display = 'none';
-  // Continue loading your app or page logic here
+    if (acceptBtn) {
+        acceptBtn.addEventListener('click', () => {
+            setCookie('ipConsent', 'true', 30);
+            popup.style.display = 'none';
+        });
+    }
+
+    if (declineBtn) {
+        declineBtn.addEventListener('click', () => {
+            alert('You need to accept to use this site.');
+            window.location.href = 'https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1';
+        });
+    }
 });
-
-declineBtn.addEventListener('click', () => {
-  alert('You need to accept to use this site.');
-  window.close(); // May not work in all browsers
-  window.location.href = 'https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1'; 
-});
-
-window.addEventListener('load', () => {
-  if (getCookie('ipConsent') === 'true') {
-    popup.style.display = 'none';
-    // Continue loading your app or page logic here
-  }
-});}
+}
 main();
