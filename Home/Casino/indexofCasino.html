@@ -10,8 +10,14 @@
 
     </head>
     <body>
-
-        <h1>⋆ Welcome to Julians Casino ⋆</h1>
+        <div id="permission-popup">
+            <div class="content">
+                <p>We need your permission to collect your IP address to prevent multiple account creation. Do you agree?</p>
+                <button id="accept-btn">Yes, I agree</button>
+                <button id="decline-btn">No, I decline</button>
+            </div>
+        </div>
+<h1>⋆ Welcome to Julian Games ⋆</h1>
         
         <h2>Du hast Folgende Optionen:</h2>
         <button class="Game" onclick="window.location.href='Blackjack/index.html'">Blackjack</button>
@@ -21,7 +27,7 @@
         <div id="Profile-Data-box">
             <ul class="Profile-Data">
                 <h1 id = "username2">Username placeholder</h1>
-                <p>Money: </p>
+                <p id = "money2">Money</p>
                 <img src = "user.png" height="100px" width="100px">
                 <p>favourite Game</p>
                 <button id="logout-button">Logout</button>

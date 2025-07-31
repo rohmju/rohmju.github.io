@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+body {
+  margin: 0;
+  background: #114B5F;
+  font-family: 'Roboto Mono', monospace;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.game-container {
+  background: #1A936F;
+  border-radius: 10px;
+  padding: 20px 30px;
+  width: 350px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  user-select: none;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+}
+
+.status {
+  margin-bottom: 20px;
+}
+
+.cards-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  min-height: 100px;
+}
+
+.controls {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.controls button {
+  background: #88D498;
+  border: none;
+  color: #114B5F;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 10px 18px;
+  margin: 0 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.controls button:hover:not(:disabled) {
+  background: #6abb7c;
+}
+
+.controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.message {
+  margin-top: 15px;
+  font-size: 18px;
+  text-align: center;
+  min-height: 24px;
+}
+
+/* Card styling */
+
+.card {
+  width: 60px;
+  height: 90px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px 8px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.card.red {
+  color: #C1272D;
+}
+
+.card .corner {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.card .corner.top-left {
+  align-self: flex-start;
+}
+
+.card .corner.bottom-right {
+  align-self: flex-end;
+  transform: rotate(180deg);
+}
+
+.card .suit-center {
+  font-size: 30px;
+  text-align: center;
+  line-height: 1;
+  margin-top: 10px;
+}
+
+/* Suit symbols */
+.suit-hearts, .suit-diamonds {
+  color: #C1272D;
+}
+
+.suit-clubs, .suit-spades {
+  color: black;
+}

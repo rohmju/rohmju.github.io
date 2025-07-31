@@ -6,7 +6,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color:6 ;
+    background-color: lightsteelblue ;
 }
 .sign-up-button{
     position:  'absolute';
@@ -175,20 +175,95 @@ body {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
 }
-.Profile-Data{
+#Profile-Data-box {
   display: flex;
-  flex-direction:column;
   justify-content: center;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+  padding: 40px 20px;
+  background-color: #004d40;
+  visibility: hidden;
+  border-radius: 20px;
+}
+
+.Profile-Data {
+  list-style: none; /* ul-Punkte entfernen */
   background-color: #00755E;
   border-radius: 20px;
-
-  
-
+  padding: 30px 40px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  color: #e0f2f1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }
-#Profile-Data-box{
-visibility: hidden;
+
+.Profile-Data > h1#username2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #a7ffeb;
+  letter-spacing: 1.2px;
+}
+
+/* Styling für die <p>-Tags (Money und Favourite Game) */
+.Profile-Data > p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #b2dfdb;
+  margin: 0;
+}
+
+/* Bild zentrieren und stylen */
+.Profile-Data > img {
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+/* Logout Button */
+#logout-button {
+  background-color: #009688;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 30px;
+  font-size: 1.1rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  align-self: center;
+  max-width: 200px;
+  margin-top: 10px;
+}
+
+#logout-button:hover {
+  background-color: #00796b;
+}
+#permission-popup {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+#permission-popup .content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
+  font-family: sans-serif;
+}
+#permission-popup button {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
 }

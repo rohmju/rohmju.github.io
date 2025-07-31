@@ -1,5 +1,22 @@
 const n = 37;
-let money = 1000;
+let money = 0;
+let username = "";
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8"
+const supabase = createClient(supabaseUrl, supabaseKey)
+const cookie = document.cookie.split('; ').find(c => c.startsWith('userInfo='));
+username = cookie ? (cookie.split('=')[1] || '').split('|')[0] : '';
+console.log('Username:', username);
+
+if (cookie) {
+    const [prefix, value] = cookie.split('=');
+    const [label, amount] = (value || '').split('|');
+
+    if (label === 'test' && Number.isInteger(Number(amount))) {
+        money = Number(amount);
+    }
+}
 let currentBet = 0;
 let betNumber = '';
 let betColor = '';
@@ -127,6 +144,10 @@ placeBetBtn.addEventListener('click', function() {
     }
     currentBet = betValue;
     money -= betValue;
+
+    // Update cookie on bet
+    updateCookieMoney(money);
+
     updateMoneyUI();
     placeBetBtn.disabled = true; // Nach Einsatz setzen deaktivieren
 });
@@ -191,7 +212,16 @@ betType.addEventListener('change', function() {
         colorChoice.style.display = '';
     }
 });
-function handleSpinResult(result) {
+
+// Helper to update cookie money
+function updateCookieMoney(newMoney) {
+    const newCookieValue = `test|${newMoney}`;
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
+    document.cookie = `userInfo=${newCookieValue}; path=/; expires=${expires.toUTCString()}`;
+}
+
+async function handleSpinResult(result) {
     let win = false;
     if (betNumber !== '' && result.number == betNumber) {
         money += currentBet * 36;
@@ -203,11 +233,22 @@ function handleSpinResult(result) {
         money += currentBet * 2;
         win = true;
     }
-    if (win) {
-        alert('You win!');
-    } else {
-        alert('You lose!');
+
+    // Always update database regardless of win/loss
+    const { data, error } = await supabase
+        .from('stonks')
+        .update({ money: money })
+        .eq('username', username)
+        .select();
+
+    if (error) {
+        console.error('Database update error:', error);
     }
+
+    updateCookieMoney(money);
+    alert(win ? 'You win!' : 'You lose!');
+
     currentBet = 0;
     updateMoneyUI();
 }
+
