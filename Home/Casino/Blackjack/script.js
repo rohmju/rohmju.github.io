@@ -1,4 +1,8 @@
-// Blackjack Game logic and UI
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabaseUrl = 'https://whanfrajisrghcsktdyv.supabase.co'
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8"
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -36,10 +40,60 @@ let dealerHand = [];
 let playerHand = [];
 let gameOver = false;
 let playerStands = false;
-let playerMoney = 1000;
+let playerMoney = 0;
 let currentBet = 0;
+let username = '';
 
-// Create deck of cards
+// Get username from the userInfo cookie only
+async function getUsernameFromCookie() {
+  const cookies = document.cookie.split(';').map(c => c.trim());
+  for (const cookie of cookies) {
+    const [name, value] = cookie.split('=');
+    if (name === 'userInfo') {
+      try {
+        // Instead of JSON.parse, parse like "Monkey|1000"
+        const decoded = decodeURIComponent(value);
+        console.log('Raw userInfo cookie:', decoded);
+        const parts = decoded.split('|');
+        return parts[0] || null;
+      } catch (e) {
+        console.error('Error parsing userInfo cookie:', e);
+        return null;
+      }
+    }
+  }
+  return null;
+}
+
+
+// Load player money only from DB (ignore cookie money)
+async function loadPlayerMoney() {
+  if (!username) {
+    setMessage('No username found in cookies.');
+    console.warn('Username is null or empty.');
+    return;
+  }
+  const { data, error } = await supabase
+    .from('stonks')
+    .select('money')
+    .eq('username', username)
+    .single();
+
+  if (error) {
+    setMessage('Error loading money: ' + error.message);
+    console.error('Error fetching money from DB:', error);
+    playerMoney = 1000; // fallback default
+  } else if (data) {
+    playerMoney = data.money;
+    console.log('Loaded player money from DB:', playerMoney);
+  } else {
+    playerMoney = 1000; // default if no record found
+    console.log('No money record found, using default 1000');
+  }
+  updateMoneyDisplay();
+  updateButtons();
+}
+
 function createDeck() {
   const newDeck = [];
   for (const suit of SUITS) {
@@ -50,7 +104,6 @@ function createDeck() {
   return newDeck;
 }
 
-// Shuffle deck - Fisher-Yates
 function shuffle(deck) {
   for (let i = deck.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -58,12 +111,10 @@ function shuffle(deck) {
   }
 }
 
-// Calculate value of a card
 function cardValue(card) {
   return RANK_VALUES[card.rank];
 }
 
-// Calculate hand value with ace adjustment
 function handValue(hand) {
   let value = 0;
   let aceCount = 0;
@@ -81,17 +132,14 @@ function handValue(hand) {
   return value;
 }
 
-// Check bust
 function isBust(hand) {
   return handValue(hand) > 21;
 }
 
-// Dealer hits if under 17
 function dealerShouldHit() {
   return handValue(dealerHand) < 17;
 }
 
-// Create card element for display
 function createCardElement(card) {
   const cardDiv = document.createElement('div');
   cardDiv.classList.add('card');
@@ -124,7 +172,6 @@ function createCardElement(card) {
   return cardDiv;
 }
 
-// Create card back element (for hidden card)
 function createCardBackElement() {
   const back = document.createElement('div');
   back.classList.add('card');
@@ -145,12 +192,10 @@ function createCardBackElement() {
   return back;
 }
 
-// Render cards and scores
 function renderHands() {
   dealerCardsElem.innerHTML = '';
   playerCardsElem.innerHTML = '';
 
-  // Dealer cards: First card hidden unless game over or player stands
   dealerHand.forEach((card, i) => {
     if (i === 0 && !gameOver && !playerStands) {
       dealerCardsElem.appendChild(createCardBackElement());
@@ -159,12 +204,10 @@ function renderHands() {
     }
   });
 
-  // Player cards always shown
   playerHand.forEach(card => {
     playerCardsElem.appendChild(createCardElement(card));
   });
 
-  // Dealer score: show "?" + value of other cards or full value if revealed
   if (gameOver || playerStands) {
     dealerScoreElem.textContent = handValue(dealerHand);
   } else {
@@ -175,25 +218,21 @@ function renderHands() {
     }
   }
 
-  // Player score always shown
   playerScoreElem.textContent = handValue(playerHand);
 }
 
-// Update buttons based on game state
 function updateButtons() {
   btnHit.disabled = gameOver || playerStands || currentBet === 0;
   btnStand.disabled = gameOver || playerStands || currentBet === 0;
-  btnNew.disabled = gameOver === false && currentBet === 0;
-  betInput.disabled = currentBet > 0 && !gameOver; // disable bet input once bet placed and game active
-  btnBet.disabled = currentBet > 0 && !gameOver;  // disable bet button once bet placed and game active
+  btnNew.disabled = !gameOver && currentBet === 0;
+  betInput.disabled = currentBet > 0 && !gameOver;
+  btnBet.disabled = currentBet > 0 && !gameOver;
 }
 
-// Show message in UI
 function setMessage(text) {
   messageElem.textContent = text;
 }
 
-// Start a new game round
 function startGame() {
   if (currentBet === 0) {
     setMessage('Place a bet to start the game.');
@@ -207,7 +246,6 @@ function startGame() {
   playerStands = false;
   setMessage('');
 
-  // Initial deal: player and dealer get two cards each
   playerHand.push(deck.pop());
   dealerHand.push(deck.pop());
   playerHand.push(deck.pop());
@@ -218,7 +256,6 @@ function startGame() {
   checkForBlackjack();
 }
 
-// Check if player or dealer got blackjack at start
 function checkForBlackjack() {
   const playerVal = handValue(playerHand);
   const dealerVal = handValue(dealerHand);
@@ -235,7 +272,6 @@ function checkForBlackjack() {
   }
 }
 
-// Player chooses to Hit
 function playerHit() {
   if (gameOver || playerStands) return;
   playerHand.push(deck.pop());
@@ -248,14 +284,12 @@ function playerHit() {
   updateButtons();
 }
 
-// Player chooses to Stand
 function playerStand() {
   if (gameOver) return;
   playerStands = true;
   dealerPlay();
 }
 
-// Dealer plays their turn
 function dealerPlay() {
   renderHands();
   while (dealerShouldHit()) {
@@ -265,7 +299,6 @@ function dealerPlay() {
   finishGame();
 }
 
-// Finish game and determine winner
 function finishGame() {
   const playerVal = handValue(playerHand);
   const dealerVal = handValue(dealerHand);
@@ -285,36 +318,44 @@ function finishGame() {
   }
 }
 
-// End round and update money
-// push == isPush: no money lost or won
-// playerWon: true if player wins, false if loses, undefined if push
-function endRound(isPush = false, playerWon = false) {
+async function endRound(isPush = false, playerWon = false) {
   gameOver = true;
   updateButtons();
 
   if (isPush) {
-    // Bet returned, no change
+    // no money change
   } else if (playerWon) {
-    playerMoney += currentBet; // Win amount equals bet (1:1 payout)
+    playerMoney += currentBet;
   } else {
-    playerMoney -= currentBet; // Lose bet
+    playerMoney -= currentBet;
   }
+
   currentBet = 0;
   updateMoneyDisplay();
   betInput.disabled = false;
   btnBet.disabled = false;
   btnHit.disabled = true;
   btnStand.disabled = true;
+
+  const { error } = await supabase
+    .from('stonks')
+    .update({ money: playerMoney })
+    .eq('username', username);
+
+  if (error) {
+    setMessage('Error updating money in database: ' + error.message);
+    console.error('DB update error:', error);
+  } else {
+    console.log('Money updated in DB:', playerMoney);
+  }
 }
 
-// Update money displayed on screen
 function updateMoneyDisplay() {
   moneyElem.textContent = playerMoney;
 }
 
-// Place bet button clicked
 function placeBet() {
-  if (gameOver === false && currentBet > 0) {
+  if (!gameOver && currentBet > 0) {
     setMessage("Finish current round before placing new bet.");
     return;
   }
@@ -333,13 +374,15 @@ function placeBet() {
   updateButtons();
 }
 
-// Event listeners
 btnHit.addEventListener('click', playerHit);
 btnStand.addEventListener('click', playerStand);
 btnNew.addEventListener('click', startGame);
 btnBet.addEventListener('click', placeBet);
 
-// Initialize money display and buttons on load
-updateMoneyDisplay();
-updateButtons();
-setMessage('Place your bet to start.');
+(async function init() {
+  username = await getUsernameFromCookie();
+  console.log('Username from cookie:', username);
+  await loadPlayerMoney();
+  updateButtons();
+  setMessage('Place your bet to start.');
+})();

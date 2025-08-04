@@ -2,25 +2,38 @@ const n = 37;
 let money = 0;
 let username = "";
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
 const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8"
 const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Get username from cookie (only username)
 const cookie = document.cookie.split('; ').find(c => c.startsWith('userInfo='));
 username = cookie ? (cookie.split('=')[1] || '').split('|')[0] : '';
 console.log('Username:', username);
 
-if (cookie) {
-    const [prefix, value] = cookie.split('=');
-    const [label, amount] = (value || '').split('|');
-
-    if (label === 'test' && Number.isInteger(Number(amount))) {
-        money = Number(amount);
-    }
-}
 let currentBet = 0;
 let betNumber = '';
 let betColor = '';
 
+// Load money from database
+async function loadMoney() {
+    const { data, error } = await supabase
+        .from('stonks')
+        .select('money')
+        .eq('username', username)
+        .single();
+
+    if (error || !data) {
+        console.error('Error fetching money:', error);
+        money = 0; // fallback
+    } else {
+        money = data.money;
+    }
+    updateMoneyUI();
+}
+
+// Update money and bet info in UI
 function updateMoneyUI() {
     document.getElementById('money-amount').textContent = money;
     document.getElementById('bet-number').textContent = betNumber !== '' ? betNumber : '-';
@@ -104,7 +117,7 @@ window.addEventListener('resize', () => {
 window.addEventListener('DOMContentLoaded', () => {
     kugelAngle = 0; // Start auf 0
     positionKugel(kugelAngle);
-    updateMoneyUI();
+    loadMoney();
 });
 setTimeout(() => {
     kugelAngle = 0;
@@ -126,7 +139,7 @@ placeBetBtn.addEventListener('click', function() {
         return;
     }
     if (betValue > money) {
-        betError.textContent = 'You cannot bet more than you have!';
+        betError.textContent = 'Insufficient money or error verifying funds.';
         return;
     }
 
@@ -143,10 +156,9 @@ placeBetBtn.addEventListener('click', function() {
         betNumber = '';
     }
     currentBet = betValue;
-    money -= betValue;
 
-    // Update cookie on bet
-    updateCookieMoney(money);
+    // Deduct money immediately after placing bet
+    money -= currentBet;
 
     updateMoneyUI();
     placeBetBtn.disabled = true; // Nach Einsatz setzen deaktivieren
@@ -213,17 +225,10 @@ betType.addEventListener('change', function() {
     }
 });
 
-// Helper to update cookie money
-function updateCookieMoney(newMoney) {
-    const newCookieValue = `test|${newMoney}`;
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 7);
-    document.cookie = `userInfo=${newCookieValue}; path=/; expires=${expires.toUTCString()}`;
-}
-
+// Handle spin result, update money and database
 async function handleSpinResult(result) {
     let win = false;
-    if (betNumber !== '' && result.number == betNumber) {
+    if (betNumber !== '' && result.number === betNumber) {
         money += currentBet * 36;
         win = true;
     } else if (betColor && (
@@ -234,21 +239,20 @@ async function handleSpinResult(result) {
         win = true;
     }
 
-    // Always update database regardless of win/loss
+    // Update money in database
     const { data, error } = await supabase
         .from('stonks')
         .update({ money: money })
-        .eq('username', username)
-        .select();
+        .eq('username', username);
 
     if (error) {
         console.error('Database update error:', error);
     }
 
-    updateCookieMoney(money);
     alert(win ? 'You win!' : 'You lose!');
 
     currentBet = 0;
+    betNumber = '';
+    betColor = '';
     updateMoneyUI();
 }
-

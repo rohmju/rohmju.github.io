@@ -1,9 +1,7 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 // API-Key aufteilen und erst später zusammensetzen
-const part1 = "23iujrq21eqd21e09qJKWOFLSA23WJFJa";
-const part2 = "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4ODQwOTYsImV4cCI6MjA2NzQ2MDA5Nn0.";
-const part3 = "mgR_VSslwqLrvf9iE1IxRY9aUjYvSrxjUa-bfRlyRR8";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8";
+
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8"
 let clicked1 = false;
 let clicked2 = false;
 let mogging = false;
@@ -126,6 +124,25 @@ function signup() {
                 msg2.textContent = "Signup failed. Username might already exist with this IP. Contact the owner(me) to reset your password.";
             }
         }
+    }
+}
+async function getMoney(username) {
+    try {
+        const { data, error } = await supabase
+            .from('stonks')
+            .select('money')
+            .eq('username', username)
+            .single();
+
+        if (error || !data) {
+            console.error('Error fetching money from stonks:', error);
+            return 0; // Default to 0 if no data found
+        }
+
+        return data.money;
+    } catch (err) {
+        console.error('Unexpected error in getMoney:', err);
+        return 0;
     }
 }
 
