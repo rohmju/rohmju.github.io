@@ -3,7 +3,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const part1 = "23iujrq21eqd21e09qJKWOFLSA23WJFJa";
 const part2 = "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4ODQwOTYsImV4cCI6MjA2NzQ2MDA5Nn0.";
 const part3 = "mgR_VSslwqLrvf9iE1IxRY9aUjYvSrxjUa-bfRlyRR8";
-const supabaseKey = clearlog() + part2 + part3;
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoYW5mcmFqaXNyZ2hjc2t0ZHl2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MTg4NDA5NiwiZXhwIjoyMDY3NDYwMDk2fQ.B84xlTaviNSb4tGRVbIoAL6KlvEOQVYAm8PXqyPv6q8";
 let clicked1 = false;
 let clicked2 = false;
 let mogging = false;
@@ -13,23 +13,20 @@ const divbutton = document.getElementById("signbuttons")
 const supabaseUrl = "https://whanfrajisrghcsktdyv.supabase.co"
 const supabase = createClient(supabaseUrl, supabaseKey)
 let money = 0;
+
 async function main() {
     permissionPopup();
     fetchdata();
     checkcookie();
-    
     appearsignupButton();
     appearLoginButton();
     console.log('Casino page loaded');
     createloginbox();
     signup();
-    
     const logoutBtn = document.getElementById("logout-button");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", logout);
     }
-
-    
 }
 
 function appearsignupButton(){
@@ -37,10 +34,7 @@ function appearsignupButton(){
     signupButton.className = "sign-up-button";
     signupButton.textContent = "sign up!"
     signupButton.onclick = () => {showsignup()};
-    if(stillgoing == true)
-        {signupButton.style.visibility = "visible"
-    }
-    else {signupButton.style.visibility = "hidden"}
+    signupButton.style.visibility = stillgoing ? "visible" : "hidden";
     divbutton.appendChild(signupButton);
     console.log("signup is here ")
 }
@@ -49,11 +43,8 @@ function appearLoginButton(){
     const loginButton = document.createElement('button');
     loginButton.className = 'login-button';
     loginButton.textContent = 'Login';
-    if(stillgoing == true)
-        {loginButton.style.visibility = "visible"}
-    else {loginButton.style.visibility = "hidden"}
-    loginButton.onclick = () => {
-        makevisible()}
+    loginButton.style.visibility = stillgoing ? "visible" : "hidden";
+    loginButton.onclick = () => { makevisible() }
     divbutton.appendChild(loginButton);
     console.log('Login button appeared');
 }
@@ -126,13 +117,13 @@ function signup() {
                 return;
             }
             const IP = await getClientIP();
-            let { error } = await supabase.from('userss').insert([{ username, password, IP }]);
+            let { error } = await supabase.from('userss').insert([{ username, password, "IP": IP }]);
             if (!error) {
                 msg2.textContent = "Signup successful! You can now log in.";
                 signupbox.style.visibility = "hidden";
                 fetchdata();
             } else {
-                msg2.textContent = "Signup failed. Username might already exist with this IP. Contact the owner(me) to reset your pawword.";
+                msg2.textContent = "Signup failed. Username might already exist with this IP. Contact the owner(me) to reset your password.";
             }
         }
     }
@@ -256,7 +247,7 @@ function deleteCookie(cookieName) {
 }
 
 async function updatemoney(money) {
-    
+    // implement as needed
 }
 function permissionPopup() {
 window.addEventListener('DOMContentLoaded', () => {

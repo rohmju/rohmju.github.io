@@ -1,10 +1,7 @@
 // Blackjack Game logic and UI
 
-// Card suits and ranks
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-// Map rank to values (A can be 1 or 11, handled separately)
 const RANK_VALUES = {
   'A': 11,
   '2': 2,
@@ -21,7 +18,6 @@ const RANK_VALUES = {
   'K': 10
 };
 
-// Elements
 const dealerCardsElem = document.getElementById('dealer-cards');
 const playerCardsElem = document.getElementById('player-cards');
 const dealerScoreElem = document.getElementById('dealer-score');
@@ -31,13 +27,19 @@ const messageElem = document.getElementById('message');
 const btnHit = document.getElementById('btn-hit');
 const btnStand = document.getElementById('btn-stand');
 const btnNew = document.getElementById('btn-new');
+const btnBet = document.getElementById('btn-bet');
+const betInput = document.getElementById('bet-input');
+const moneyElem = document.getElementById('money');
 
 let deck = [];
 let dealerHand = [];
 let playerHand = [];
 let gameOver = false;
 let playerStands = false;
+let playerMoney = 1000;
+let currentBet = 0;
 
+// Create deck of cards
 function createDeck() {
   const newDeck = [];
   for (const suit of SUITS) {
@@ -48,18 +50,20 @@ function createDeck() {
   return newDeck;
 }
 
+// Shuffle deck - Fisher-Yates
 function shuffle(deck) {
-  // Fisher-Yates shuffle
   for (let i = deck.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
   }
 }
 
+// Calculate value of a card
 function cardValue(card) {
   return RANK_VALUES[card.rank];
 }
 
+// Calculate hand value with ace adjustment
 function handValue(hand) {
   let value = 0;
   let aceCount = 0;
@@ -69,7 +73,6 @@ function handValue(hand) {
     if (card.rank === 'A') aceCount++;
   }
 
-  // Adjust for Aces if bust
   while (value > 21 && aceCount > 0) {
     value -= 10;
     aceCount--;
@@ -78,52 +81,41 @@ function handValue(hand) {
   return value;
 }
 
+// Check bust
 function isBust(hand) {
   return handValue(hand) > 21;
 }
 
+// Dealer hits if under 17
 function dealerShouldHit() {
   return handValue(dealerHand) < 17;
 }
 
+// Create card element for display
 function createCardElement(card) {
   const cardDiv = document.createElement('div');
   cardDiv.classList.add('card');
 
-  // Color red for hearts and diamonds
   if (card.suit === '♥' || card.suit === '♦') {
     cardDiv.classList.add('red');
   }
 
-  // Top-left rank + suit
   const topLeft = document.createElement('div');
   topLeft.classList.add('corner', 'top-left');
   topLeft.textContent = `${card.rank}\n${card.suit}`;
   cardDiv.appendChild(topLeft);
 
-  // Center suit symbol
   const centerSuit = document.createElement('div');
   centerSuit.classList.add('suit-center');
-
-  // Add suit specific class for color
   switch (card.suit) {
-    case '♥':
-      centerSuit.classList.add('suit-hearts');
-      break;
-    case '♦':
-      centerSuit.classList.add('suit-diamonds');
-      break;
-    case '♣':
-      centerSuit.classList.add('suit-clubs');
-      break;
-    case '♠':
-      centerSuit.classList.add('suit-spades');
-      break;
+    case '♥': centerSuit.classList.add('suit-hearts'); break;
+    case '♦': centerSuit.classList.add('suit-diamonds'); break;
+    case '♣': centerSuit.classList.add('suit-clubs'); break;
+    case '♠': centerSuit.classList.add('suit-spades'); break;
   }
   centerSuit.textContent = card.suit;
   cardDiv.appendChild(centerSuit);
 
-  // Bottom-right rank + suit (rotated)
   const bottomRight = document.createElement('div');
   bottomRight.classList.add('corner', 'bottom-right');
   bottomRight.textContent = `${card.rank}\n${card.suit}`;
@@ -132,32 +124,7 @@ function createCardElement(card) {
   return cardDiv;
 }
 
-function renderHands() {
-  // Clear current cards
-  dealerCardsElem.innerHTML = '';
-  playerCardsElem.innerHTML = '';
-
-  // Dealer cards (show only one card if game not over and player hasn't stood)
-  for (let i = 0; i < dealerHand.length; i++) {
-    let cardElem;
-    if (i === 0 || gameOver || playerStands) {
-      cardElem = createCardElement(dealerHand[i]);
-    } else {
-      cardElem = createCardBackElement();
-    }
-    dealerCardsElem.appendChild(cardElem);
-  }
-
-  for (const card of playerHand) {
-    const cardElem = createCardElement(card);
-    playerCardsElem.appendChild(cardElem);
-  }
-
-  // Scores
-  dealerScoreElem.textContent = playerStands || gameOver ? handValue(dealerHand) : `? + ${handValue(dealerHand.slice(1))}`;
-  playerScoreElem.textContent = handValue(playerHand);
-}
-
+// Create card back element (for hidden card)
 function createCardBackElement() {
   const back = document.createElement('div');
   back.classList.add('card');
@@ -165,7 +132,6 @@ function createCardBackElement() {
   back.style.boxShadow = 'inset 0 0 10px rgba(255,255,255,0.3)';
   back.style.position = 'relative';
 
-  // Add a pattern for card back
   const pattern = document.createElement('div');
   pattern.style.position = 'absolute';
   pattern.style.top = '10px';
@@ -179,17 +145,69 @@ function createCardBackElement() {
   return back;
 }
 
+// Render cards and scores
+function renderHands() {
+  dealerCardsElem.innerHTML = '';
+  playerCardsElem.innerHTML = '';
+
+  // Dealer cards: First card hidden unless game over or player stands
+  dealerHand.forEach((card, i) => {
+    if (i === 0 && !gameOver && !playerStands) {
+      dealerCardsElem.appendChild(createCardBackElement());
+    } else {
+      dealerCardsElem.appendChild(createCardElement(card));
+    }
+  });
+
+  // Player cards always shown
+  playerHand.forEach(card => {
+    playerCardsElem.appendChild(createCardElement(card));
+  });
+
+  // Dealer score: show "?" + value of other cards or full value if revealed
+  if (gameOver || playerStands) {
+    dealerScoreElem.textContent = handValue(dealerHand);
+  } else {
+    if (dealerHand.length > 1) {
+      dealerScoreElem.textContent = `? + ${handValue(dealerHand.slice(1))}`;
+    } else {
+      dealerScoreElem.textContent = '?';
+    }
+  }
+
+  // Player score always shown
+  playerScoreElem.textContent = handValue(playerHand);
+}
+
+// Update buttons based on game state
+function updateButtons() {
+  btnHit.disabled = gameOver || playerStands || currentBet === 0;
+  btnStand.disabled = gameOver || playerStands || currentBet === 0;
+  btnNew.disabled = gameOver === false && currentBet === 0;
+  betInput.disabled = currentBet > 0 && !gameOver; // disable bet input once bet placed and game active
+  btnBet.disabled = currentBet > 0 && !gameOver;  // disable bet button once bet placed and game active
+}
+
+// Show message in UI
+function setMessage(text) {
+  messageElem.textContent = text;
+}
+
+// Start a new game round
 function startGame() {
+  if (currentBet === 0) {
+    setMessage('Place a bet to start the game.');
+    return;
+  }
   deck = createDeck();
   shuffle(deck);
-
   dealerHand = [];
   playerHand = [];
   gameOver = false;
   playerStands = false;
-  messageElem.textContent = '';
+  setMessage('');
 
-  // Deal initial cards
+  // Initial deal: player and dealer get two cards each
   playerHand.push(deck.pop());
   dealerHand.push(deck.pop());
   playerHand.push(deck.pop());
@@ -200,57 +218,44 @@ function startGame() {
   checkForBlackjack();
 }
 
-function updateButtons() {
-  btnHit.disabled = gameOver || playerStands;
-  btnStand.disabled = gameOver || playerStands;
-  btnNew.disabled = false;
-}
-
+// Check if player or dealer got blackjack at start
 function checkForBlackjack() {
   const playerVal = handValue(playerHand);
   const dealerVal = handValue(dealerHand);
 
   if (playerVal === 21 && dealerVal === 21) {
-    messageElem.textContent = "Both have Blackjack! It's a push.";
-    gameOver = true;
-    playerStands = true;
-    renderHands();
-    updateButtons();
+    setMessage("Both have Blackjack! It's a push.");
+    endRound(true);
   } else if (playerVal === 21) {
-    messageElem.textContent = "Blackjack! You win!";
-    gameOver = true;
-    playerStands = true;
-    renderHands();
-    updateButtons();
+    setMessage("Blackjack! You win!");
+    endRound(false, true);
   } else if (dealerVal === 21) {
-    messageElem.textContent = "Dealer has Blackjack. You lose.";
-    gameOver = true;
-    playerStands = true;
-    renderHands();
-    updateButtons();
+    setMessage("Dealer has Blackjack. You lose.");
+    endRound(false, false);
   }
 }
 
+// Player chooses to Hit
 function playerHit() {
   if (gameOver || playerStands) return;
   playerHand.push(deck.pop());
   renderHands();
 
   if (isBust(playerHand)) {
-    messageElem.textContent = "You busted! Dealer wins.";
-    gameOver = true;
-    playerStands = true;
+    setMessage("You busted! Dealer wins.");
+    endRound(false, false);
   }
   updateButtons();
 }
 
+// Player chooses to Stand
 function playerStand() {
   if (gameOver) return;
   playerStands = true;
-  // Dealer plays out
   dealerPlay();
 }
 
+// Dealer plays their turn
 function dealerPlay() {
   renderHands();
   while (dealerShouldHit()) {
@@ -260,26 +265,81 @@ function dealerPlay() {
   finishGame();
 }
 
+// Finish game and determine winner
 function finishGame() {
   const playerVal = handValue(playerHand);
   const dealerVal = handValue(dealerHand);
 
   if (isBust(dealerHand)) {
-    messageElem.textContent = "Dealer busted! You win!";
+    setMessage("Dealer busted! You win!");
+    endRound(false, true);
   } else if (dealerVal > playerVal) {
-    messageElem.textContent = "Dealer wins.";
+    setMessage("Dealer wins.");
+    endRound(false, false);
   } else if (dealerVal < playerVal) {
-    messageElem.textContent = "You win!";
+    setMessage("You win!");
+    endRound(false, true);
   } else {
-    messageElem.textContent = "It's a push.";
+    setMessage("It's a push.");
+    endRound(true);
   }
+}
 
+// End round and update money
+// push == isPush: no money lost or won
+// playerWon: true if player wins, false if loses, undefined if push
+function endRound(isPush = false, playerWon = false) {
   gameOver = true;
+  updateButtons();
+
+  if (isPush) {
+    // Bet returned, no change
+  } else if (playerWon) {
+    playerMoney += currentBet; // Win amount equals bet (1:1 payout)
+  } else {
+    playerMoney -= currentBet; // Lose bet
+  }
+  currentBet = 0;
+  updateMoneyDisplay();
+  betInput.disabled = false;
+  btnBet.disabled = false;
+  btnHit.disabled = true;
+  btnStand.disabled = true;
+}
+
+// Update money displayed on screen
+function updateMoneyDisplay() {
+  moneyElem.textContent = playerMoney;
+}
+
+// Place bet button clicked
+function placeBet() {
+  if (gameOver === false && currentBet > 0) {
+    setMessage("Finish current round before placing new bet.");
+    return;
+  }
+  const bet = parseInt(betInput.value);
+  if (isNaN(bet) || bet <= 0) {
+    setMessage("Please enter a valid bet.");
+    return;
+  }
+  if (bet > playerMoney) {
+    setMessage("You don't have enough money for that bet.");
+    return;
+  }
+  currentBet = bet;
+  setMessage(`Bet placed: $${currentBet}. Click 'New Game' to start.`);
+
   updateButtons();
 }
 
+// Event listeners
 btnHit.addEventListener('click', playerHit);
 btnStand.addEventListener('click', playerStand);
 btnNew.addEventListener('click', startGame);
+btnBet.addEventListener('click', placeBet);
 
-startGame();
+// Initialize money display and buttons on load
+updateMoneyDisplay();
+updateButtons();
+setMessage('Place your bet to start.');

@@ -27,6 +27,38 @@ h1 {
   letter-spacing: 2px;
 }
 
+.money-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.money-info input {
+  width: 60px;
+  border-radius: 4px;
+  border: none;
+  padding: 3px 6px;
+  font-weight: 700;
+}
+
+.money-info button {
+  background: #88D498;
+  border: none;
+  color: #114B5F;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-left: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.money-info button:hover:not(:disabled) {
+  background: #6abb7c;
+}
+
 .status {
   margin-bottom: 20px;
 }
@@ -35,7 +67,7 @@ h1 {
   display: flex;
   gap: 12px;
   margin-top: 10px;
-  min-height: 100px;
+  min-height: 90px;
 }
 
 .controls {
